@@ -15,6 +15,8 @@ import keiyoushi.network.rateLimit
 import keiyoushi.source.KeiSource
 import keiyoushi.utils.asJsoup
 import keiyoushi.utils.firstInstanceOrNull
+import keiyoushi.utils.parseAs
+import keiyoushi.utils.toJsonElement
 import keiyoushi.utils.tryParseZonedDateTime
 import kotlinx.serialization.json.JsonElement
 import okhttp3.Headers
@@ -22,11 +24,14 @@ import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import org.jsoup.nodes.Document
+import org.jsoup.parser.Parser
 import java.time.format.DateTimeFormatter
 
 @Source
 abstract class TruyenHentai : KeiSource() {
     override val supportsLatest = false
+
+    override val supportsFilterFetching = true
 
     override fun getHomeUrl() = "$baseUrl/en/search/latest-galleries"
 
@@ -39,8 +44,12 @@ abstract class TruyenHentai : KeiSource() {
     override suspend fun getLatestUpdates(page: Int) = getPopularManga(page)
 
     override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage {
-        val category = filters.firstInstanceOrNull<CategoryFilter>()?.state.orEmpty()
-        return listing(GalleryHtml.listUrl(baseUrl, 1, query, category), page)
+        val category = filters.firstInstanceOrNull<CategoryFilter>()?.path
+        val tag = filters.firstInstanceOrNull<TagFilter>()?.path
+        require(category == null || tag == null) { "Choose a category or a tag; set the other selector to All." }
+        val selected = tag ?: category
+        val url = if (selected == null) GalleryHtml.listUrl(baseUrl, 1, query) else DirectoryHtml.listUrl(baseUrl, selected)
+        return listing(url, page)
     }
 
     private val starts = object : LinkedHashMap<Pair<String, Int>, String>(64, 0.75f, true) {
@@ -111,11 +120,33 @@ abstract class TruyenHentai : KeiSource() {
     override suspend fun getPageList(chapter: SChapter): List<Page> = GalleryHtml.images(client.get(getChapterUrl(chapter), Fetch.DOCUMENT).asJsoup())
         .mapIndexed { index, url -> Page(index, imageUrl = url) }
 
-    override fun getFilterList(data: JsonElement?) = FilterList(
-        Filter.Header("Gallery posts only. A category/tag overrides search text."),
-        CategoryFilter(),
-        Filter.Header("Enter a category slug or copy its /en/xxx-category/... URL from the website."),
-    )
+    override suspend fun fetchFilterData(): JsonElement {
+        val categories = client.get("$baseUrl/en/get_categories/public", Fetch.XHR)
+            .parseAs<List<CategoryDto>>().map { it.entry() }.let(DirectoryHtml::sorted)
+        check(categories.isNotEmpty()) { "The category directory is empty." }
+        val index = client.get("$baseUrl/sitemaps/sitemap-tags-truyenhentai-index.xml", Fetch.DOCUMENT).asJsoup(Parser.xmlParser())
+        val sitemapUrls = DirectoryHtml.sitemaps(index, baseUrl)
+        check(sitemapUrls.isNotEmpty()) { "The tag sitemap index is empty." }
+        val tags = buildList {
+            for (url in sitemapUrls) {
+                val document = client.get(url, Fetch.DOCUMENT).asJsoup(Parser.xmlParser())
+                addAll(DirectoryHtml.tags(document, baseUrl))
+            }
+        }.let(DirectoryHtml::sorted)
+        check(tags.isNotEmpty()) { "The tag directory is empty." }
+        return Directories(categories, tags).toJsonElement()
+    }
 
-    private class CategoryFilter : Filter.Text("Category / tag slug or URL")
+    override fun getFilterList(data: JsonElement?): FilterList {
+        val directories = data?.parseAs<Directories>()
+        return FilterList(
+            buildList {
+                add(Filter.Header("Choose a category OR a tag. A selection overrides search text."))
+                if (directories != null) {
+                    add(CategoryFilter(directories.categories))
+                    add(TagFilter(directories.tags))
+                }
+            },
+        )
+    }
 }

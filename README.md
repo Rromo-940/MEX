@@ -2,7 +2,7 @@
 
 Prepared for https://github.com/Rromo-940/MEX and Mihon v0.21.3.
 
-The store includes signed HentaiDad v1.6.2 and Truyen Hentai v1.6.1 gallery-only extensions. It preserves the signing certificate, package name, and source ID used by the installed APK.
+The store includes signed HentaiDad v1.6.2 and Truyen Hentai v1.6.2 gallery-only extensions. It preserves the signing certificate, package name, and source ID used by the installed APK.
 
 ## Store URL
 
@@ -63,4 +63,12 @@ Build engine: https://github.com/keiyoushi/extensions-source at c469cb1e161ef826
 
 ## Truyen Hentai
 
-English source for https://www.truyen-hentai.com. Supports gallery browsing, keyword search, page navigation, pasted gallery URLs, and a category/tag slug or URL field in Filter. Video posts are excluded. Each image post is represented by one Gallery chapter. Cloudflare may require opening the source in Mihon WebView before reading. Browser catalogue/search/pagination and reader image decoding were inspected; build tests and lint must pass before publication. See validation/truyenhentai.json for verification and limits.
+English gallery-only source for https://www.truyen-hentai.com. Supports browsing, keyword search, pagination and pasted gallery URLs.
+
+Version 1.6.2 replaces the combined text filter with separate **Categories (A–Z)** and **Tags (A–Z)** selectors. Categories come from the public category API; tags come from every page listed in the site's published tag sitemap index. Entries are deduplicated and alphabetized. The observed site directory contains 129 categories and 24,238 published tag entries across five sitemap pages.
+
+Choose one category OR one tag; set the other selector to All. A directory selection takes priority over keyword search. Gallery-only filtering also applies to mixed category and tag pages. The selected native URL is preserved, including encoded tag names.
+
+On first opening Filter, allow the directory to load, then close and reopen Filter or tap Reset. Directory data is cached by the extension framework and refreshed periodically. If Cloudflare prevents directory loading, open the source in Mihon WebView and resolve the website's normal challenge there before retrying.
+
+Build, eleven automated tests, lint, and signing checks passed. Directory counts and tag URL structure were inspected in the browser. No Android-device UI test was performed. See validation/truyenhentai.json.
