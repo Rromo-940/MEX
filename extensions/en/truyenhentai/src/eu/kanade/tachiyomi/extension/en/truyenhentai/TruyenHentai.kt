@@ -44,10 +44,24 @@ abstract class TruyenHentai : KeiSource() {
 
     override suspend fun getLatestUpdates(page: Int) = getPopularManga(page)
 
+    private val nameIndex by lazy { NameIndex(client, "truyenhentai", headers) }
+    private val indexQueries = mutableSetOf<String>()
     override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage {
         if (query.isBlank()) return rawSearch(page, query, filters)
         val titleFilters = FilterList()
-        return rawSearch(page, query, titleFilters)
+        val accept = { _: String, _: String -> true }
+        if (page > 1 && synchronized(indexQueries) { query in indexQueries }) return nameIndex.search(page, query, accept)
+        if (page == 1) synchronized(indexQueries) { indexQueries.remove(query) }
+        val result = rawSearch(page, query, titleFilters)
+        if (page != 1 || result.mangas.isNotEmpty()) return result
+        val indexed = nameIndex.search(page, query, accept)
+        if (indexed.mangas.isNotEmpty()) {
+            synchronized(indexQueries) {
+                if (indexQueries.size >= 32) indexQueries.remove(indexQueries.first())
+                indexQueries.add(query)
+            }
+        }
+        return if (indexed.mangas.isNotEmpty()) indexed else result
     }
     private suspend fun rawSearch(page: Int, query: String, filters: FilterList): MangasPage {
         val category = filters.firstInstanceOrNull<CategoryFilter>()?.path
@@ -155,6 +169,7 @@ abstract class TruyenHentai : KeiSource() {
         val directories = data?.parseAs<Directories>()
         return FilterList(
             buildList {
+                add(Filter.Header("Name index has partial catalogue coverage."))
                 add(Filter.Header("Main search uses website results (titles and metadata) and takes priority. With search empty, use Categories or Tag search."))
                 if (directories != null) {
                     add(CategoryFilter(directories.categories))

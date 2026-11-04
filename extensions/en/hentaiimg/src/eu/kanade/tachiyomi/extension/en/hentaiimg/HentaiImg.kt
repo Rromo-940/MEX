@@ -36,6 +36,7 @@ abstract class HentaiImg : KeiSource() {
     private var cachedShard: Pair<String, List<List<String>>>? = null
     override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage {
         if (query.isBlank()) return rawSearch(page, query, filters)
+        if (page == 1) synchronized(indexQueries) { indexQueries.remove(query) }
         if (page > 1 && synchronized(indexQueries) { indexQueries[query] == true }) return indexSearch(page, query)
         val result = rawSearch(page, query, FilterList())
         if (page != 1 || result.mangas.isNotEmpty()) return result

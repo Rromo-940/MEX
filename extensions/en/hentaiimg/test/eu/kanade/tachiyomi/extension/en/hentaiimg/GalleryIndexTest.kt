@@ -8,4 +8,6 @@ class GalleryIndexTest {
  @Test fun creatorNameFindsSlug() { assertTrue(GalleryIndex.matches("mimiya-cow-girl-x-monster-full-set", "Mimiya")) }
  @Test fun excludesUnrelatedGallery() { assertFalse(GalleryIndex.matches("another-cow-girl", "mimiya")) }
  @Test fun allWordsMatchWithoutTitleCrawl() { assertTrue(GalleryIndex.matches("mimiya-cow-girl-full-set", "[Mimiya] Cow Girl [Full Set]")) }
+
+ @Test fun partialCreatorNames() { assertTrue(GalleryIndex.matches("mimiyama-kiichi-gallery", "mimiya")) }
 }

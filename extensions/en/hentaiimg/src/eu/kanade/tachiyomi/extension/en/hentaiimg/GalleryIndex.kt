@@ -10,7 +10,7 @@ internal object GalleryIndex {
     fun matches(slug: String, query: String): Boolean {
         val terms = words(query)
         val available = words(slug).toSet()
-        return terms.isNotEmpty() && terms.all { it in available }
+        return terms.isNotEmpty() && terms.all { term -> available.any { term in it } }
     }
     fun thumbnail(url: String) = if ("/upload/" in url && "/p=" !in url) url.substringBeforeLast('/') + "/p=160x200/" + url.substringAfterLast('/') else url
 }

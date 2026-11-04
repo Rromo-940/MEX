@@ -30,10 +30,34 @@ abstract class HentaiYoga : KeiSource() {
     override fun getHomeUrl() = "$baseUrl/gallery"
     override suspend fun getPopularManga(page: Int) = listing(YogaHtml.listUrl(baseUrl, "gallery", page, "most_viewed", "", "", "", ""))
     override suspend fun getLatestUpdates(page: Int) = listing(YogaHtml.listUrl(baseUrl, "gallery", page, "newest", "", "", "", ""))
+    private val nameIndex by lazy { NameIndex(client, "hentaiyoga", headers) }
+    private val indexQueries = mutableSetOf<String>()
     override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage {
         if (query.isBlank()) return rawSearch(page, query, filters)
         val titleFilters = FilterList(listOfNotNull(filters.firstInstanceOrNull<TypeFilter>(), filters.firstInstanceOrNull<LanguageFilter>()))
-        return rawSearch(page, query, titleFilters)
+        val accept = { path: String, language: String ->
+            val type = filters.firstInstanceOrNull<TypeFilter>()?.value ?: "gallery"
+            val country = filters.firstInstanceOrNull<LanguageFilter>()?.value ?: "US"
+            val contentMatches = when (type) {
+                "comics" -> path.startsWith("/comics/")
+                "manga" -> path.startsWith("/manga/")
+                "manhwa" -> path.startsWith("/manhwa/")
+                else -> path.startsWith("/gallery/") || path.startsWith("/comics/")
+            }
+            contentMatches && (type == "gallery" || type == "comics" || country.isEmpty() || language.substringBefore('-').lowercase() == mapOf("US" to "en", "JP" to "ja", "RU" to "ru", "BR" to "pt", "ES" to "es", "VN" to "vi", "ID" to "id", "SA" to "ar")[country])
+        }
+        if (page > 1 && synchronized(indexQueries) { query in indexQueries }) return nameIndex.search(page, query, accept)
+        if (page == 1) synchronized(indexQueries) { indexQueries.remove(query) }
+        val result = rawSearch(page, query, titleFilters)
+        if (page != 1 || result.mangas.isNotEmpty()) return result
+        val indexed = nameIndex.search(page, query, accept)
+        if (indexed.mangas.isNotEmpty()) {
+            synchronized(indexQueries) {
+                if (indexQueries.size >= 32) indexQueries.remove(indexQueries.first())
+                indexQueries.add(query)
+            }
+        }
+        return if (indexed.mangas.isNotEmpty()) indexed else result
     }
     private suspend fun rawSearch(page: Int, query: String, filters: FilterList): MangasPage = listing(
         YogaHtml.listUrl(
@@ -107,6 +131,7 @@ abstract class HentaiYoga : KeiSource() {
         return images.mapIndexed { index, url -> Page(index, imageUrl = url) }
     }
     override fun getFilterList(data: JsonElement?) = FilterList(
+        Filter.Header("Name index has partial catalogue coverage."),
         TypeFilter(),
         SortFilter(),
         Filter.Header("Gallery tags use site keyword search. Comics support one exact tag."),

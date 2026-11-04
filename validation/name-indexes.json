@@ -1,0 +1,106 @@
+{
+  "extensions": {
+    "hentaidad": {
+      "version": "1.6.5",
+      "tests": {
+        "tests": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 2
+      },
+      "apkSha256": "05a0192b74e5e0042e83d924f08e5afde8c2882d06533fdd2b7b14379ce6ca5e"
+    },
+    "truyenhentai": {
+      "version": "1.6.7",
+      "tests": {
+        "tests": 18,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apkSha256": "2e4929f36adca60f8e9655877880807ed1de3c2a2afcf238c104ca3882f3b588"
+    },
+    "thehentai": {
+      "version": "1.6.4",
+      "tests": {
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apkSha256": "7ddb274765acc51dc437b3da46e0e7b9d3e0d4e633e20bd75d4d9c1915f03cf6"
+    },
+    "hentaiyoga": {
+      "version": "1.6.4",
+      "tests": {
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apkSha256": "aa6ad546c0d189a1eef23c0fe4071505fb55e0427f04cfafcb6b189f08f265bc"
+    },
+    "hentaiimg": {
+      "version": "1.6.6",
+      "tests": {
+        "tests": 19,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apkSha256": "d998413c654501c3fadfd5894eaed568d7b91b02986dc6db59b5188c53b89da8"
+    }
+  },
+  "coverage": {
+    "hentaidad": {
+      "schema": 1,
+      "builtAt": "2026-11-04T04:40:25.421745+00:00",
+      "galleries": 143,
+      "coverage": "partial",
+      "origin": "Previously captured public HTML and explicit exports; automated catalogue access currently blocked",
+      "shards": 64
+    },
+    "truyenhentai": {
+      "schema": 1,
+      "builtAt": "2026-11-04T04:40:25.441286+00:00",
+      "galleries": 2,
+      "coverage": "partial",
+      "origin": "Previously captured public HTML and explicit exports; automated catalogue access currently blocked",
+      "shards": 64
+    },
+    "thehentai": {
+      "schema": 1,
+      "builtAt": "2026-11-04T04:40:25.464845+00:00",
+      "galleries": 68,
+      "coverage": "partial",
+      "origin": "Previously captured public HTML and explicit exports; automated catalogue access currently blocked",
+      "shards": 64
+    },
+    "hentaiyoga": {
+      "schema": 1,
+      "builtAt": "2026-11-04T04:40:25.499376+00:00",
+      "galleries": 235,
+      "coverage": "partial",
+      "origin": "Previously captured public HTML and explicit exports; automated catalogue access currently blocked",
+      "shards": 64
+    },
+    "hentaiimg": {
+      "schema": 1,
+      "builtAt": "2026-11-04T04:14:29.875878+00:00",
+      "galleries": 162771,
+      "sitemaps": 721,
+      "shards": 64,
+      "bytes": 20451523,
+      "maxShardBytes": 656661,
+      "mimiyaGalleries": 12,
+      "titleSource": "Public gallery URL slugs; display titles are approximations",
+      "format": "sha256(prefix3)[0] & 63; complete matching slug records, 20 results per page",
+      "mimiyaExactWordGalleries": 7,
+      "mimiyaSubstringGalleries": 12
+    }
+  },
+  "partialNameRegression": "mimiya matches mimiyama; 12 Hentai IMG snapshot matches verified",
+  "catalogueAccess": "New catalogue fetches for the other four sites returned HTTP 403; only existing captured HTML and two previously verified Truyen galleries were imported.",
+  "futureSources": "AGENTS.md requires name indexes, manifests and partial-name matching for new sources.",
+  "androidDeviceTest": false
+}

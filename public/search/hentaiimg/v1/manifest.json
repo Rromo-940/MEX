@@ -9,5 +9,6 @@
   "mimiyaGalleries": 12,
   "titleSource": "Public gallery URL slugs; display titles are approximations",
   "format": "sha256(prefix3)[0] & 63; complete matching slug records, 20 results per page",
-  "mimiyaExactWordGalleries": 7
+  "mimiyaExactWordGalleries": 7,
+  "mimiyaSubstringGalleries": 12
 }

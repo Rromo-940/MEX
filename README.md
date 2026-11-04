@@ -134,3 +134,16 @@ The index uses gallery URL slugs as approximate names and the first sitemap imag
 Refresh manually from a network where the site's public sitemaps are accessible: run python scripts/build_hentaiimg_index.py, then commit public/search/hentaiimg. The attempted cloud build was denied HTTP 403, so its failing scheduled workflow was removed. No automated refresh is enabled.
 
 The generated index, reported regression gallery, compression format, release build, 18 unit tests, lint, and store signing were checked. No Android-device test was performed.
+
+
+## Name indexes on all MEX sources
+
+All five sources now have a fast name-index fallback when native search returns no results. Partial-name matching includes Mimiyama when searching mimiya. Hentai IMG's snapshot contains 12 such partial-name matches (seven exact Mimiya names plus five Mimiyama names). Normal website search remains first, without phone-side catalogue crawling.
+
+Current coverage: Hentai IMG 162,771 public gallery URL snapshots; HentaiDad 143, Truyen Hentai 2, The Hentai 68, and Hentai Yoga 235 previously captured galleries/series. The latter four are explicitly PARTIAL. Fresh automated catalogue requests returned HTTP 403; complete indexes need permitted catalogue exports or accessible public feeds. A source having index support does not mean its whole catalogue has been indexed. Yoga preserves content type and language filtering.
+
+Standing requirements for every new MEX source are in AGENTS.md. The NameIndex template, index builder, coverage manifests and regression tests are part of the repository. Index matching supports partial words; native search remains unchanged. Full coverage must be verified and declared rather than inferred from a small seed.
+
+To expand partial indexes from permitted captured pages or catalogue exports: install scripts/index-requirements.txt, then run python scripts/build_name_indexes.py --input-dir EXPORT_DIRECTORY from the repository root. Explicit records can be supplied as SOURCE.records.json arrays of [path, title, thumbnail, language]. The builder merges them with existing records. New sources require a corresponding source/collector entry. Do not bypass access restrictions to populate an index.
+
+Builds, tests, release lint, signing and public publication checks were performed. Two optional HentaiDad captured-fixture tests were skipped. No Android-device test was performed.
