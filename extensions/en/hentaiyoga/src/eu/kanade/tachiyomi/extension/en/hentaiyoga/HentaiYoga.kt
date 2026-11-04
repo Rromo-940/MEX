@@ -30,11 +30,10 @@ abstract class HentaiYoga : KeiSource() {
     override fun getHomeUrl() = "$baseUrl/gallery"
     override suspend fun getPopularManga(page: Int) = listing(YogaHtml.listUrl(baseUrl, "gallery", page, "most_viewed", "", "", "", ""))
     override suspend fun getLatestUpdates(page: Int) = listing(YogaHtml.listUrl(baseUrl, "gallery", page, "newest", "", "", "", ""))
-    private val titleSearch = TitleSearch()
     override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage {
         if (query.isBlank()) return rawSearch(page, query, filters)
         val titleFilters = FilterList(listOfNotNull(filters.firstInstanceOrNull<TypeFilter>(), filters.firstInstanceOrNull<LanguageFilter>()))
-        return titleSearch.find(page, query, query + ":" + (filters.firstInstanceOrNull<TypeFilter>()?.value ?: "gallery") + ":" + (filters.firstInstanceOrNull<LanguageFilter>()?.value ?: "US")) { remotePage -> rawSearch(remotePage, query, titleFilters) }
+        return rawSearch(page, query, titleFilters)
     }
     private suspend fun rawSearch(page: Int, query: String, filters: FilterList): MangasPage = listing(
         YogaHtml.listUrl(

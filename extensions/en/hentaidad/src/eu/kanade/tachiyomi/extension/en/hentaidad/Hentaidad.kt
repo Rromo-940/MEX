@@ -48,11 +48,10 @@ abstract class Hentaidad : KeiSource() {
 
     override suspend fun getLatestUpdates(page: Int) = getPopularManga(page)
 
-    private val titleSearch = TitleSearch()
     override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage {
         if (query.isBlank()) return rawSearch(page, query, filters)
         val titleFilters = FilterList()
-        return titleSearch.find(page, query, query) { remotePage -> rawSearch(remotePage, query, titleFilters) }
+        return rawSearch(page, query, titleFilters)
     }
     private suspend fun rawSearch(page: Int, query: String, filters: FilterList): MangasPage {
         val customTag = filters.firstInstanceOrNull<CustomTagFilter>()?.state.orEmpty()
@@ -101,7 +100,7 @@ abstract class Hentaidad : KeiSource() {
         val tags = data?.parseAs<List<Tag>>().orEmpty()
         return FilterList(
             buildList {
-                add(Filter.Header("Main search matches gallery titles and takes priority over tag filters."))
+                add(Filter.Header("Main search uses website results (titles and metadata) and takes priority over tag filters."))
                 if (tags.isNotEmpty()) add(TagFilter(tags))
                 add(CustomTagFilter())
                 add(Filter.Header("Custom tag overrides the picker when the main search is empty."))

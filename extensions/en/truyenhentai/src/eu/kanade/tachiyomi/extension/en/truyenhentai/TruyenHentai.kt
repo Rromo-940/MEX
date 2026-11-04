@@ -44,11 +44,10 @@ abstract class TruyenHentai : KeiSource() {
 
     override suspend fun getLatestUpdates(page: Int) = getPopularManga(page)
 
-    private val titleSearch = TitleSearch()
     override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage {
         if (query.isBlank()) return rawSearch(page, query, filters)
         val titleFilters = FilterList()
-        return titleSearch.find(page, query, query) { remotePage -> rawSearch(remotePage, query, titleFilters) }
+        return rawSearch(page, query, titleFilters)
     }
     private suspend fun rawSearch(page: Int, query: String, filters: FilterList): MangasPage {
         val category = filters.firstInstanceOrNull<CategoryFilter>()?.path
@@ -156,7 +155,7 @@ abstract class TruyenHentai : KeiSource() {
         val directories = data?.parseAs<Directories>()
         return FilterList(
             buildList {
-                add(Filter.Header("Main search matches titles and takes priority. With search empty, use Categories or Tag search."))
+                add(Filter.Header("Main search uses website results (titles and metadata) and takes priority. With search empty, use Categories or Tag search."))
                 if (directories != null) {
                     add(CategoryFilter(directories.categories))
                 }

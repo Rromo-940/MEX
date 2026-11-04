@@ -28,12 +28,11 @@ abstract class HentaiImg : KeiSource() {
     override suspend fun getPopularManga(page: Int) = listing(ImgHtml.listUrl(baseUrl, "/ranking/", page))
     override suspend fun getLatestUpdates(page: Int) = listing(ImgHtml.listUrl(baseUrl, "/search/", page))
     private var tagNames: Map<String, String>? = null
-    private val titleSearch = TitleSearch()
     override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage {
         if (query.isBlank()) return rawSearch(page, query, filters)
         val titleFilters = FilterList()
-        val result = titleSearch.find(page, query, query) { remotePage -> rawSearch(remotePage, query, titleFilters) }
-        if (page != 1 || query.none { it.isWhitespace() }) return result
+        val result = rawSearch(page, query, titleFilters)
+        if (page != 1 || result.mangas.isNotEmpty() || query.trim().length < 40 || query.none { it.isWhitespace() }) return result
         val slug = ImgHtml.titleSlug(query)
         if (slug.isEmpty()) return result
         val response = client.get("$baseUrl/image/$slug/", Fetch.DOCUMENT, ensureSuccess = false)
@@ -124,7 +123,7 @@ abstract class HentaiImg : KeiSource() {
     }
     override fun getFilterList(data: JsonElement?) = FilterList(
         FeedFilter(),
-        Filter.Header("Main search matches titles and takes priority. Tag and Browse apply with search empty."),
+        Filter.Header("Main search uses website results (titles and metadata) and takes priority. Tag and Browse apply with search empty."),
         TagFilter(),
         Filter.Header("Tag: site display name, exact slug, or /search/tag/ URL. No large tag dropdown."),
     )

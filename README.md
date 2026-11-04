@@ -112,10 +112,12 @@ Fixes empty results on Mihon: the site serves a different layout to Android brow
 Eight regression tests and release lint passed. Captured Android-user-agent pages returned 10 entries each for Popular/Latest and 76 full-size gallery images. The original desktop-only verification missed this variant. No Android-device test was performed.
 
 
-## Title search update
 
-Main search now matches gallery titles across all five sources. All typed words must appear in the title, ignoring case, punctuation, and accents. Tag/category text does not satisfy a title search. Main text takes precedence over tag/category filters; Yoga retains content type and language. Empty filtered result pages are skipped while native pagination continues, so sparse matches remain accessible. Broad searches may take longer because site keyword searches include metadata.
 
-Hentai IMG additionally verifies a gallery URL derived from pasted full titles, recovering exact galleries omitted by native keyword search. Its empty-result pages no longer return sidebar recommendations. This address lookup depends on the site's slug matching the title; title searches still depend on the site's index for other candidates. It does not build or guarantee a complete local index of each website.
+## Faster website search
 
-Versions: HentaiDad 1.6.3, Truyen Hentai 1.6.5, The Hentai 1.6.2, Hentai Yoga 1.6.2, Hentai IMG 1.6.3. Build, unit tests, lint, and signing checks passed for all five. Four native searches were checked using public HTML; Truyen live search returned HTTP 403. No Android-device test was performed.
+Main search now returns the website's normal results, including title, tag and description matches, as requested. The previous strict title-only scan and its pagination map have been removed from all five sources. Normal search no longer crawls extra result pages to collect title matches. The website's pagination determines the normal batch size.
+
+Hentai IMG's verified full-title gallery-address lookup is retained only for an empty first result page and a multiword query at least 40 characters long. Short queries such as cow girl and mimiya do not trigger it. Existing primary-result parsing and mobile-reader fixes remain.
+
+Versions: HentaiDad 1.6.4, Truyen Hentai 1.6.6, The Hentai 1.6.3, Hentai Yoga 1.6.3, Hentai IMG 1.6.4. Main search still takes priority over tag/category filters; Yoga retains content type and language. Gallery/video exclusion remains. Build, tests, lint and signing checks passed. Two optional HentaiDad capture tests were skipped because their external fixture paths were not supplied. No Android-device benchmark was performed.

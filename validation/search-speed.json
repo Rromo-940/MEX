@@ -1,0 +1,57 @@
+{
+  "extensions": {
+    "hentaidad": {
+      "version": "1.6.4",
+      "tests": {
+        "tests": 11,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 2
+      },
+      "apkSha256": "fdb6b612c6a6c4b89e6e5cedfbe1c29ea85cfaaa670342005a6cba4e78507d48"
+    },
+    "truyenhentai": {
+      "version": "1.6.6",
+      "tests": {
+        "tests": 16,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apkSha256": "0b7ce2288f9d3366bc11e50c3027f24d75abcc40e799d124cde41ec095891b68"
+    },
+    "thehentai": {
+      "version": "1.6.3",
+      "tests": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apkSha256": "f281e15e17d25c6a49463c4eea21788b9242ea279f7fc904931c014301f3fbbc"
+    },
+    "hentaiyoga": {
+      "version": "1.6.3",
+      "tests": {
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apkSha256": "66a9686b2c7d5c75d1f0779cdc928fe1bc12af4eeacd04879bdc22bf046436d6"
+    },
+    "hentaiimg": {
+      "version": "1.6.4",
+      "tests": {
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apkSha256": "93fa15399c2d4b04593f8291baad4f697f8f17157a76624572e9efe7fc4d68a7"
+    }
+  },
+  "behavior": "Main search returns native website results, including tag/description matches. Removed all cross-page title filtering and its pagination map. Hentai IMG direct-title fallback only runs for empty first-page results with a multiword query of at least 40 characters.",
+  "userPreference": "Website search results, including tag matches",
+  "androidDeviceTest": false
+}

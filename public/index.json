@@ -11,13 +11,13 @@
         "name": "HentaiDad",
         "packageName": "eu.kanade.tachiyomi.extension.en.hentaidad",
         "resources": {
-          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaidad/106003/extension.apk",
-          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaidad/106003/icon.png",
-          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaidad/106003/extension.jar"
+          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaidad/106004/extension.apk",
+          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaidad/106004/icon.png",
+          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaidad/106004/extension.jar"
         },
         "extensionLib": "1.6",
-        "versionCode": "106003",
-        "versionName": "1.6.3",
+        "versionCode": "106004",
+        "versionName": "1.6.4",
         "contentWarning": "CONTENT_WARNING_NSFW",
         "sources": [
           {
@@ -32,13 +32,13 @@
         "name": "Hentai IMG",
         "packageName": "eu.kanade.tachiyomi.extension.en.hentaiimg",
         "resources": {
-          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106003/extension.apk",
-          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106003/icon.png",
-          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106003/extension.jar"
+          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106004/extension.apk",
+          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106004/icon.png",
+          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106004/extension.jar"
         },
         "extensionLib": "1.6",
-        "versionCode": "106003",
-        "versionName": "1.6.3",
+        "versionCode": "106004",
+        "versionName": "1.6.4",
         "contentWarning": "CONTENT_WARNING_NSFW",
         "sources": [
           {
@@ -53,13 +53,13 @@
         "name": "Hentai Yoga",
         "packageName": "eu.kanade.tachiyomi.extension.en.hentaiyoga",
         "resources": {
-          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiyoga/106002/extension.apk",
-          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiyoga/106002/icon.png",
-          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiyoga/106002/extension.jar"
+          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiyoga/106003/extension.apk",
+          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiyoga/106003/icon.png",
+          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiyoga/106003/extension.jar"
         },
         "extensionLib": "1.6",
-        "versionCode": "106002",
-        "versionName": "1.6.2",
+        "versionCode": "106003",
+        "versionName": "1.6.3",
         "contentWarning": "CONTENT_WARNING_NSFW",
         "sources": [
           {
@@ -74,13 +74,13 @@
         "name": "The Hentai",
         "packageName": "eu.kanade.tachiyomi.extension.en.thehentai",
         "resources": {
-          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.thehentai/106002/extension.apk",
-          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.thehentai/106002/icon.png",
-          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.thehentai/106002/extension.jar"
+          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.thehentai/106003/extension.apk",
+          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.thehentai/106003/icon.png",
+          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.thehentai/106003/extension.jar"
         },
         "extensionLib": "1.6",
-        "versionCode": "106002",
-        "versionName": "1.6.2",
+        "versionCode": "106003",
+        "versionName": "1.6.3",
         "contentWarning": "CONTENT_WARNING_NSFW",
         "sources": [
           {
@@ -95,13 +95,13 @@
         "name": "Truyen Hentai",
         "packageName": "eu.kanade.tachiyomi.extension.en.truyenhentai",
         "resources": {
-          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.truyenhentai/106005/extension.apk",
-          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.truyenhentai/106005/icon.png",
-          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.truyenhentai/106005/extension.jar"
+          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.truyenhentai/106006/extension.apk",
+          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.truyenhentai/106006/icon.png",
+          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.truyenhentai/106006/extension.jar"
         },
         "extensionLib": "1.6",
-        "versionCode": "106005",
-        "versionName": "1.6.5",
+        "versionCode": "106006",
+        "versionName": "1.6.6",
         "contentWarning": "CONTENT_WARNING_NSFW",
         "sources": [
           {
