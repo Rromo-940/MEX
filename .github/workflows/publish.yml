@@ -1,0 +1,61 @@
+name: Publish extension store
+on:
+  push:
+    branches: [main]
+    paths: ['packages/**', 'scripts/**', 'store.json', 'requirements.txt', '.github/workflows/publish.yml']
+  workflow_dispatch:
+    inputs:
+      rebuild:
+        description: Build all website extensions from source (requires signing secrets)
+        type: boolean
+        default: false
+permissions:
+  contents: write
+concurrency:
+  group: extension-store
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Check out pinned build engine
+        if: inputs.rebuild == true
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: keiyoushi/extensions-source
+          ref: c469cb1e161ef826373b5b87eb6174f872549108
+          path: build-engine
+          persist-credentials: false
+      - name: Rebuild extensions
+        if: inputs.rebuild == true
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          ALIAS: ${{ secrets.ALIAS }}
+        run: python scripts/build_extensions.py
+      - name: Install index dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Generate and validate store
+        env:
+          STORE_REPOSITORY: ${{ github.repository }}
+        run: |
+          owner="${STORE_REPOSITORY%%/*}"
+          repo="${STORE_REPOSITORY#*/}"
+          owner="${owner,,}"
+          signer=$(find "$ANDROID_HOME/build-tools" -name apksigner -type f | sort -V | tail -1)
+          python scripts/generate_store.py --base-url "https://raw.githubusercontent.com/${STORE_REPOSITORY}/main/public" --apksigner "$signer"
+      - name: Publish index and packages
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add packages public
+          if ! git diff --cached --quiet; then
+            git commit -m "Update signed extension packages"
+            git push
+          fi
