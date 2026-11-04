@@ -1,0 +1,74 @@
+{
+  "extension": "Hentai IMG",
+  "version": "1.6.1",
+  "tests": {
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "siteChecks": {
+    "detail": {
+      "cards": 7,
+      "fullImages": 76,
+      "next": false
+    },
+    "second": {
+      "cards": 6,
+      "fullImages": 40,
+      "next": false
+    },
+    "keyword": {
+      "cards": 20,
+      "fullImages": 0,
+      "next": true
+    },
+    "tag": {
+      "cards": 20,
+      "fullImages": 0,
+      "next": true
+    },
+    "ranking": {
+      "cards": 20,
+      "fullImages": 0,
+      "next": true
+    },
+    "downloadranking": {
+      "cards": 16,
+      "fullImages": 0,
+      "next": true
+    },
+    "bookmarkranking": {
+      "cards": 16,
+      "fullImages": 0,
+      "next": true
+    },
+    "likeranking": {
+      "cards": 16,
+      "fullImages": 0,
+      "next": true
+    },
+    "recently": {
+      "cards": 20,
+      "fullImages": 0,
+      "next": true
+    },
+    "recentdownload": {
+      "cards": 16,
+      "fullImages": 0,
+      "next": true
+    },
+    "recentbookmark": {
+      "cards": 16,
+      "fullImages": 0,
+      "next": true
+    },
+    "recentlike": {
+      "cards": 16,
+      "fullImages": 0,
+      "next": true
+    }
+  },
+  "androidDeviceTest": false,
+  "apkSha256": "42fc0f5c2b1f9412680a4c38f6fcd0e58ab608073170c470caae9556f63aa2ee"
+}

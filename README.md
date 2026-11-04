@@ -92,3 +92,14 @@ Gallery tags use website keyword search, while comics support one exact tag. Gen
 Gallery reading uses the native complete full-size noscript image set, preserving its order. Manga/manhwa use native chapter lists and chapter images, with update checks, chapter dates, descriptions, and available author/artist/status metadata. No video player is included. Native gallery pages were verified with 160 and 68 images, a manhwa chapter with 30 images, and manga with 15 chapters; keyword, exact comic tag, genre and language routes returned results.
 
 Six regression tests, release build, lint, and store signing verification passed. No Android-device test was performed.
+
+
+## Hentai IMG
+
+Hentai IMG v1.6.1 adds hentai-img.com: complete full-size image galleries, keyword search, exact tags, Latest, Popular posts, Download/Bookmark/Like rankings, Recently viewed, Recent downloads/bookmarks/likes, catalogue pagination, and gallery update checks. No account is required for these public features.
+
+Tags use a text field. Display names are resolved using the site's tag directory; exact slugs and same-site /search/tag/ URLs are also accepted. Keyword search and exact tag are separate; browse feeds apply when both fields are empty. The site does not expose a separate category taxonomy for galleries.
+
+The reader extracts full-size links marked data-modal-gallery-image-item, never the p=700 display previews or p=160x200 thumbnails. Native Next links are followed when a gallery spans pages, with duplicate images removed and loops detected. Previous/Next Post links are excluded. Single-image ranking/archive walls, videos, and account actions such as posting comments/bookmarks remain website features.
+
+Six regression tests, release build, lint, and store signing verification passed. Public HTML checks verified all nine browse feeds, keyword and tag pagination, and 76-image and 40-image galleries. No Android-device test was performed.
