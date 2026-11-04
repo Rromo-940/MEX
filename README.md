@@ -2,7 +2,7 @@
 
 Prepared for https://github.com/Rromo-940/MEX and Mihon v0.21.3.
 
-The store includes signed HentaiDad v1.6.2 and Truyen Hentai v1.6.3 gallery-only extensions. It preserves the signing certificate, package name, and source ID used by the installed APK.
+The store includes signed HentaiDad v1.6.2 and Truyen Hentai v1.6.4 gallery-only extensions. It preserves the signing certificate, package name, and source ID used by the installed APK.
 
 ## Store URL
 
@@ -63,10 +63,10 @@ Build engine: https://github.com/keiyoushi/extensions-source at c469cb1e161ef826
 
 ## Truyen Hentai
 
-Version 1.6.3 removes the 24,000-entry tag dropdown that caused lag and crashes. Filter now provides **Tag search**, a plain text field that sends the entered term to the website's gallery search. Partial terms are handled by the website search; this can match titles as well as tag/character metadata. It is not an autocomplete selector or strict exact-tag filter.
+Version 1.6.4 fixes preview-only gallery reading. The reader now follows the website's expanded-gallery flow: open /expand, read the media ID, fetch the primary image, then request every additional album image. Images are returned in the API's order, with duplicate URLs removed. Thumbnail-only responses no longer silently substitute for complete gallery pages. Videos and locked assets are excluded.
 
-Set Categories to All, enter a term in Tag search (for example tracer), and apply. Leave Tag search empty to use the normal search bar or browse a selected category. Categories remain selectable and alphabetized. Videos remain excluded.
+Existing library and chapter paths remain stable. After updating, restart Mihon and reopen the gallery. Previously cached pages or old downloads may still contain only the preview: clear the affected cached chapter or delete its old download and redownload it.
 
-The extension no longer downloads or builds the complete tag catalogue. Old tag catalogue cache is discarded on encountering it, and subsequent cache refreshes fetch categories only. After updating, close and reopen the source if the old filter panel remains visible.
+Tag search remains a lightweight text field using website gallery search. Categories remain selectable and alphabetized. Set Categories to All when using Tag search. The extension does not download the full tag catalogue.
 
-Eleven tests passed, including URL routing and legacy-cache compatibility; release lint and signing verification passed. Android-device UI testing was not available. See validation/truyenhentai.json.
+Sixteen tests passed, including multiple-image API composition, order, duplicate first images, single-image posts, locked/video exclusions, thumbnail-only failure, and expanded URLs. Lint and signing verification passed. The expanded reader was inspected in a browser; no Android-device test was performed.

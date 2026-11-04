@@ -87,7 +87,7 @@ abstract class TruyenHentai : KeiSource() {
 
     override suspend fun getMangaByUrl(url: HttpUrl): SManga? {
         if (url.host.removePrefix("www.") != baseUrl.toHttpUrl().host.removePrefix("www.")) return null
-        val doc = client.get(baseUrl + url.encodedPath, Fetch.DOCUMENT).asJsoup()
+        val doc = client.get(baseUrl + url.encodedPath.trimEnd('/').removeSuffix("/expand"), Fetch.DOCUMENT).asJsoup()
         return if (GalleryHtml.images(doc).isEmpty()) null else details(doc)
     }
 
@@ -117,8 +117,23 @@ abstract class TruyenHentai : KeiSource() {
         return SMangaUpdate(updated, chapterList)
     }
 
-    override suspend fun getPageList(chapter: SChapter): List<Page> = GalleryHtml.images(client.get(getChapterUrl(chapter), Fetch.DOCUMENT).asJsoup())
-        .mapIndexed { index, url -> Page(index, imageUrl = url) }
+    override fun getChapterUrl(chapter: SChapter) = GalleryHtml.expandedUrl(baseUrl, chapter.url)
+
+    private val ajaxHeaders get() = headers.newBuilder().set("X-Requested-With", "XMLHttpRequest").build()
+
+    override suspend fun getPageList(chapter: SChapter): List<Page> {
+        val expandedUrl = getChapterUrl(chapter)
+        val doc = client.get(expandedUrl, Fetch.DOCUMENT).asJsoup()
+        val id = doc.selectFirst("#component-node[data-media-id]")!!.attr("data-media-id").toLong()
+        val main = client.get("$baseUrl/en/get-image/$id", ajaxHeaders, Fetch.XHR.from(expandedUrl)).parseAs<MediaResponse>().image
+        if (main.isLocked || !main.isImage()) return emptyList()
+        val additional = if (main.type == "img-gal") {
+            client.get("$baseUrl/en/get-album-images/$id", ajaxHeaders, Fetch.XHR.from(expandedUrl)).parseAs<AlbumResponse>().images
+        } else {
+            emptyList()
+        }
+        return GalleryPages.images(main, additional).mapIndexed { index, image -> Page(index, imageUrl = image) }
+    }
 
     override suspend fun fetchFilterData(): JsonElement {
         val categories = client.get("$baseUrl/en/get_categories/public", Fetch.XHR)

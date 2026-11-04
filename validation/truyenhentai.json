@@ -1,16 +1,18 @@
 {
   "extension": "Truyen Hentai",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "tests": {
-    "tests": 11,
+    "tests": 16,
     "failures": 0,
     "errors": 0,
     "skipped": 0
   },
-  "tagInput": "Plain text search routed to website gallery search; no tag dropdown, autocomplete, or tag catalogue download.",
-  "categories": "Alphabetized selectable category directory retained.",
-  "cacheMigration": "Legacy full-tag cache is discarded when encountered; replacement cache contains categories only.",
+  "readerFlow": "Open native /expand page, read component-node media ID, request get-image then get-album-images for img-gal, combine hero plus all additional images in order.",
+  "browserEvidence": "Expanded adult-character gallery renders two full image elements instead of the one preview on its detail page. Viewer JavaScript confirms JSON endpoint and image-field contract.",
+  "existingFeatures": "Text-based tag search and selectable categories retained.",
+  "sourceIdPreserved": true,
+  "chapterPathsPreserved": true,
   "signature": "verified against existing MEX signing identity",
   "androidDeviceTest": false,
-  "apkSha256": "e44bc42646a827c1be5dfd80203878e3352eaca174af6fcb4869eabfffa69908"
+  "apkSha256": "d49d4065fd14479b67e5e6e192c3d08ece52b56bded5657f53e59fd5e1e1cf33"
 }

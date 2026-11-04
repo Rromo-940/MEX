@@ -22,6 +22,8 @@ internal object GalleryHtml {
 
     private val pageSegment = Regex("page-\\d+")
 
+    fun expandedUrl(base: String, path: String): String = base + path.trimEnd('/').removeSuffix("/expand") + "/expand"
+
     fun images(doc: Document): List<String> = doc.select("img.main-media-element[src]")
         .map { it.absUrl("src") }
         .filter { it.toHttpUrlOrNull() != null }
