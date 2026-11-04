@@ -71,6 +71,27 @@
         ]
       },
       {
+        "name": "Porn Comic",
+        "packageName": "eu.kanade.tachiyomi.extension.en.porncomic",
+        "resources": {
+          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.porncomic/106001/extension.apk",
+          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.porncomic/106001/icon.png",
+          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.porncomic/106001/extension.jar"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106001",
+        "versionName": "1.6.1",
+        "contentWarning": "CONTENT_WARNING_NSFW",
+        "sources": [
+          {
+            "id": "7160597084701996064",
+            "name": "Porn Comic",
+            "language": "en",
+            "homeUrl": "https://porn-comic.com"
+          }
+        ]
+      },
+      {
         "name": "The Hentai",
         "packageName": "eu.kanade.tachiyomi.extension.en.thehentai",
         "resources": {

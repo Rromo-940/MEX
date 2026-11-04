@@ -1,0 +1,39 @@
+{
+  "extension": "Porn Comic",
+  "version": "1.6.1",
+  "tests": {
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "siteChecks": {
+    "detail": {
+      "fullImage": true,
+      "pageCount": 22,
+      "imageUrl": "https://file3.acgnngca.com/nh2/2026110301/4292045_1.webp"
+    },
+    "page2": {
+      "fullImage": true,
+      "pageCount": 22,
+      "imageUrl": "https://file3.acgnngca.com/nh2/2026110301/4292045_2.webp"
+    },
+    "pictures-reader": {
+      "fullImage": true,
+      "pageCount": 314,
+      "imageUrl": "https://file3.acgnngca.com/eh/2026102209/4270957_1.webp"
+    },
+    "western-reader": {
+      "fullImage": true,
+      "pageCount": 6,
+      "imageUrl": "https://file.acgnngca.com/w/20240509/bulma_dragon_ball_z_elijahzxa-ch1-m1zovxhkpor.webp"
+    },
+    "mobile-reader": {
+      "fullImage": true,
+      "pageCount": 22,
+      "imageUrl": "https://file3.acgnngca.com/nh2/2026110301/4292045_1.webp"
+    }
+  },
+  "androidDeviceTest": false,
+  "apkSha256": "989dc3dec7f8c2b11e726893cf48dcc0e35121797b5cf0c83303832b57248d05"
+}

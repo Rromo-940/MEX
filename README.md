@@ -147,3 +147,16 @@ Standing requirements for every new MEX source are in AGENTS.md. The NameIndex t
 To expand partial indexes from permitted captured pages or catalogue exports: install scripts/index-requirements.txt, then run python scripts/build_name_indexes.py --input-dir EXPORT_DIRECTORY from the repository root. Explicit records can be supplied as SOURCE.records.json arrays of [path, title, thumbnail, language]. The builder merges them with existing records. New sources require a corresponding source/collector entry. Do not bypass access restrictions to populate an index.
 
 Builds, tests, release lint, signing and public publication checks were performed. Two optional HentaiDad captured-fixture tests were skipped. No Android-device test was performed.
+
+
+
+
+## Porn Comic v1.6.1
+
+Adds porn-comic.com image galleries: native keyword search, Latest/Top, Hentai Manga, Doujin pictures, Full color, Western series/chapters, Cosplay images, and 16 language directories. Separate text filters for tags, artists, parodies, characters and groups/circles follow the site's native directory routes. Use one directory filter at a time; it replaces Browse. Main search takes priority. Videos/animation are not reader formats; identified video cards are excluded, and a video detail page reports that it cannot be read.
+
+Manga/picture galleries return the native image-page list from the visible pagination, with image URLs resolved on demand. Western series expose their native chapter list. Artist, tags, parody, description, completed status when available, and upload dates are extracted. Native gallery and chapter paths are preserved. Video-only listing pages are skipped at most twice per request, without unbounded search crawling.
+
+The name-index fallback contains 164 previously captured gallery/series entries and is explicitly partial. It supports partial-name matches and is registered in scripts/build_name_indexes.py for future exports. No complete sitemap/catalogue export was found. Native search remains primary. Language, tag, artist, parody, character and group filters use native links rather than invented combinations.
+
+Five unit tests, release build, lint and signing checks passed. Public HTML checks covered a 22-page manga, its different second full-size image, a 314-page picture gallery, a six-page Western chapter, and the phone reader layout. One later keyword-search check hit Cloudflare; its live result remains unverified. No Android-device test was performed.

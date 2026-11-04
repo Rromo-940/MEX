@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup
-SOURCES = {"hentaidad":"https://hentaidad.com", "truyenhentai":"https://www.truyen-hentai.com", "thehentai":"https://en.thehentai.net", "hentaiyoga":"https://hentai.yoga"}
+SOURCES = {"hentaidad":"https://hentaidad.com", "truyenhentai":"https://www.truyen-hentai.com", "thehentai":"https://en.thehentai.net", "hentaiyoga":"https://hentai.yoga", "porncomic":"https://porn-comic.com"}
 STOP=set("girl girls images image erotic hentai generated sex porn part collection the and with from for full set patreon fanbox pixiv artist".split())
 def words(text):
  return re.findall("[a-z0-9]+",unicodedata.normalize("NFKD",text).encode("ascii","ignore").decode().lower())
@@ -34,6 +34,13 @@ def capture(out,path):
  for c in s.select("article.gallery-card, article.mcard"):
   a=c.select_one(".gallery-title-link, .mcard-title-link");im=c.select_one("img");lang=c.select_one('[itemprop="inLanguage"]')
   if a:emit(out,"hentaiyoga",a.get("href",""),a.text,im.get("src","") if im else "",lang.get("content","") if lang else "")
+ for c in s.select("#list > li, #doujin_album > li"):
+  a=c.select_one("a.thumb");im=a.select_one("img") if a else None
+  if not a or not im:continue
+  href=a.get("href","");title=im.get("alt","")
+  if not re.fullmatch(r"/(h|hentai|cos|western)/(comic-)?[0-9]+\.html",urlparse(href).path):continue
+  if re.search(r"\b(video|mp4)\b",title,re.I) or (c.select_one(".category") and "video" in c.select_one(".category").text.lower()):continue
+  emit(out,"porncomic",href,title,im.get("src",""))
 def main():
  ap=argparse.ArgumentParser();ap.add_argument("--input-dir",type=Path,required=True);ap.add_argument("--root",type=Path,default=Path.cwd());args=ap.parse_args();out={x:{} for x in SOURCES}
  for source in SOURCES:
@@ -51,6 +58,6 @@ def main():
    for b in {hashlib.sha256(pre.encode()).digest()[0]&63 for pre in prefixes}:buckets[b].append(row)
   dest=args.root/f"public/search/{source}/v1";dest.mkdir(parents=True,exist_ok=True)
   for b,rows in buckets.items():(dest/f"{b:02x}.json").write_text(json.dumps(sorted(rows,key=lambda x:x[0]),ensure_ascii=True,separators=(",",":")))
-  meta={"schema":1,"builtAt":datetime.now(timezone.utc).isoformat(),"galleries":len(out[source]),"coverage":"partial","origin":"Previously captured public HTML and explicit exports; automated catalogue access currently blocked","shards":64}
+  meta={"schema":1,"builtAt":datetime.now(timezone.utc).isoformat(),"galleries":len(out[source]),"coverage":"partial","origin":("Public gallery listing captures; full catalogue export not found" if source=="porncomic" else "Previously captured public HTML and explicit exports; automated catalogue access currently blocked"),"shards":64}
   (dest/"manifest.json").write_text(json.dumps(meta,indent=2)+"\n");print(source,len(out[source]))
 if __name__=="__main__":main()
