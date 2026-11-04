@@ -1,0 +1,51 @@
+{
+  "extension": "The Hentai",
+  "version": "1.6.1",
+  "tests": {
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "siteChecks": {
+    "home": {
+      "cards": 16,
+      "pages": 0,
+      "fullImage": false,
+      "next": true
+    },
+    "detail": {
+      "cards": 8,
+      "pages": 25,
+      "fullImage": false,
+      "next": false
+    },
+    "reader": {
+      "cards": 0,
+      "pages": 0,
+      "fullImage": true,
+      "next": false
+    },
+    "imageUrl": "https://en.thehentai.net/uploads/img/2026/10/good-wife-by-laliberte-porn-comics-english-01.jpg",
+    "search": {
+      "cards": 16,
+      "pages": 0,
+      "fullImage": false,
+      "next": true
+    },
+    "category": {
+      "cards": 16,
+      "pages": 0,
+      "fullImage": false,
+      "next": true
+    },
+    "tags": {
+      "cards": 0,
+      "pages": 0,
+      "fullImage": false,
+      "next": false
+    }
+  },
+  "androidDeviceTest": false,
+  "apkSha256": "97a4ac3379bd87b36f53e15c1bd8c9553e6e4be7c4b4910352be4b75538eec35"
+}

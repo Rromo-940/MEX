@@ -29,6 +29,27 @@
         ]
       },
       {
+        "name": "The Hentai",
+        "packageName": "eu.kanade.tachiyomi.extension.en.thehentai",
+        "resources": {
+          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.thehentai/106001/extension.apk",
+          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.thehentai/106001/icon.png",
+          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.thehentai/106001/extension.jar"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106001",
+        "versionName": "1.6.1",
+        "contentWarning": "CONTENT_WARNING_NSFW",
+        "sources": [
+          {
+            "id": "6996262189349007954",
+            "name": "The Hentai",
+            "language": "en",
+            "homeUrl": "https://en.thehentai.net"
+          }
+        ]
+      },
+      {
         "name": "Truyen Hentai",
         "packageName": "eu.kanade.tachiyomi.extension.en.truyenhentai",
         "resources": {

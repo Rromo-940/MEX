@@ -70,3 +70,14 @@ Existing library and chapter paths remain stable. After updating, restart Mihon 
 Tag search remains a lightweight text field using website gallery search. Categories remain selectable and alphabetized. Set Categories to All when using Tag search. The extension does not download the full tag catalogue.
 
 Sixteen tests passed, including multiple-image API composition, order, duplicate first images, single-image posts, locked/video exclusions, thumbnail-only failure, and expanded URLs. Lint and signing verification passed. The expanded reader was inspected in a browser; no Android-device test was performed.
+
+
+## The Hentai
+
+The Hentai v1.6.1 adds the English site en.thehentai.net. Supports the latest feed, keyword search, pagination, separate category and text tag filters, artist metadata, descriptions, and full-size gallery reading/downloads. Gallery updates remain enabled because the site adds pages to existing galleries. Popular currently uses the site's default feed; the site exposes no popularity sort.
+
+Categories: 3D Porn, Exclusive, Hentai, Images, Porn Comics. Tag filtering accepts a displayed name from the site's small tag directory, an exact site slug, or a same-site /tag/ URL. Artist, parody, and character URLs also work through this field. English names outside the site's directory need their actual site URL or slug (the underlying slugs are often Portuguese). One tag at a time; set Category to All when using it. Keywords can be combined with either category or tag.
+
+The reader follows the gallery's thumbnail links and extracts #img_gallery_big from each native image page, preserving site order and avoiding thumbnail substitution. No account is required. Ads and off-site cards are excluded. No video player is implemented.
+
+Four regression tests, release build, lint, and store signing verification passed. Public HTML checks confirmed a 25-page gallery, full-size reader markup, keyword results, and category pagination. No Android-device test was performed.
