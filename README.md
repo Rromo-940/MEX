@@ -1,6 +1,6 @@
 # MEX â€” personal Mihon extension store
 
-Prepared for https://github.com/Alkadi-940/MEX and Mihon v0.21.3.
+Prepared for https://github.com/Rromo-940/MEX and Mihon v0.21.3.
 
 The store starts with the signed HentaiDad v1.6.2 gallery-only extension. It preserves the signing certificate, package name, and source ID used by the installed APK.
 
@@ -8,7 +8,7 @@ The store starts with the signed HentaiDad v1.6.2 gallery-only extension. It pre
 
 Add this URL in Mihon > More > Settings > Browse > Extension stores after the repository is public:
 
-`https://raw.githubusercontent.com/Alkadi-940/MEX/main/public/index.pb`
+`https://raw.githubusercontent.com/Rromo-940/MEX/main/public/index.pb`
 
 The generated store files are committed under public/. GitHub Pages is not needed. Enable 18+ content warnings to see HentaiDad.
 
@@ -53,7 +53,7 @@ The public store contains extension programs and icons; it does not host gallery
 
 Use Python 3.10+ and Java. Install requirements.txt, then run:
 
-`python scripts/generate_store.py --base-url https://raw.githubusercontent.com/Alkadi-940/MEX/main/public --apksigner <Android-SDK-build-tools-apksigner-path>`
+`python scripts/generate_store.py --base-url https://raw.githubusercontent.com/Rromo-940/MEX/main/public --apksigner <Android-SDK-build-tools-apksigner-path>`
 
 The initial package and index were validated locally. GitHub Actions deployment and installation from the hosted store must be verified after account access is available.
 
