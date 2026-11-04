@@ -1,8 +1,9 @@
 {
   "schema": 1,
-  "builtAt": "2026-11-04T04:59:08.641302+00:00",
-  "galleries": 164,
+  "builtAt": "2026-11-04T05:15:40.502190+00:00",
+  "galleries": 165,
   "coverage": "partial",
-  "origin": "Public gallery listing pages captured during integration; no full catalogue export was found",
-  "shards": 64
+  "origin": "Captured public listings plus user-provided title/URL for gallery 842096; fresh live search and target fetch returned HTTP 403",
+  "shards": 64,
+  "userProvidedRecords": 1
 }

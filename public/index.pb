@@ -15,7 +15,7 @@ ghttps://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiy
 µ
 
 Porn Comic*eu.kanade.tachiyomi.extension.en.porncomic´
-fhttps://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.porncomic/106001/extension.apkahttps://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.porncomic/106001/icon.pngªfhttps://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.porncomic/106001/extension.jar"1.6(‘¼21.6.18B2 èðêÂ£ã¯c
+fhttps://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.porncomic/106002/extension.apkahttps://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.porncomic/106002/icon.pngªfhttps://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.porncomic/106002/extension.jar"1.6(’¼21.6.28B2 èðêÂ£ã¯c
 Porn Comicen"https://porn-comic.com
 ·
 

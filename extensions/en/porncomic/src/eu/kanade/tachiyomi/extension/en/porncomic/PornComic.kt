@@ -30,10 +30,15 @@ abstract class PornComic : KeiSource() {
     override suspend fun getPopularManga(page: Int) = listing("$baseUrl/hot/", page)
     override suspend fun getLatestUpdates(page: Int) = listing("$baseUrl/", page)
     private val nameIndex by lazy { NameIndex(client, "porncomic", headers) }
-    private val indexQueries = mutableSetOf<String>()
+    private class SearchState {
+        var nativeDone = false
+        var indexDone = false
+        val seen = mutableSetOf<String>()
+    }
+    private val searches = object : LinkedHashMap<String, SearchState>(16, 0.75f, true) {
+        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, SearchState>) = size > 16
+    }
     override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage {
-        if (page > 1 && query.isNotBlank() && synchronized(indexQueries) { query in indexQueries }) return nameIndex.search(page, query)
-        if (page == 1) synchronized(indexQueries) { indexQueries.remove(query) }
         val first = if (query.isNotBlank()) {
             baseUrl.toHttpUrl().newBuilder().addPathSegment("q").addPathSegment(query.trim() + "-1.html").build().toString()
         } else {
@@ -49,16 +54,22 @@ abstract class PornComic : KeiSource() {
             require(directories.size <= 1) { "Use one language, tag, artist, parody, character or group filter at a time." }
             baseUrl + (directories.firstOrNull() ?: filters.firstInstanceOrNull<BrowseFilter>()?.path ?: "/")
         }
-        val result = listing(first, page)
-        if (query.isBlank() || page != 1 || result.mangas.isNotEmpty()) return result
-        val indexed = nameIndex.search(page, query)
-        if (indexed.mangas.isNotEmpty()) {
-            synchronized(indexQueries) {
-                if (indexQueries.size >= 32) indexQueries.remove(indexQueries.first())
-                indexQueries.add(query)
-            }
+        if (query.isBlank()) return listing(first, page)
+        val state = synchronized(searches) {
+            if (page == 1) searches[query] = SearchState()
+            searches.getOrPut(query) { SearchState() }
         }
-        return if (indexed.mangas.isNotEmpty()) indexed else result
+        val indexed = if (state.indexDone) MangasPage(emptyList(), false) else nameIndex.search(page, query)
+        val native = try {
+            if (state.nativeDone) MangasPage(emptyList(), false) else listing(first, page)
+        } catch (e: java.io.IOException) {
+            if (indexed.mangas.isEmpty()) throw e
+            MangasPage(emptyList(), false)
+        }
+        state.nativeDone = !native.hasNextPage
+        state.indexDone = !indexed.hasNextPage
+        val mangas = SearchMerge.unique(native.mangas, indexed.mangas, state.seen) { it.url }
+        return MangasPage(mangas, !state.nativeDone || !state.indexDone)
     }
     private val starts = object : LinkedHashMap<Pair<String, Int>, String>(64, 0.75f, true) {
         override fun removeEldestEntry(eldest: MutableMap.MutableEntry<Pair<String, Int>, String>) = size > 64

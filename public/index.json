@@ -74,13 +74,13 @@
         "name": "Porn Comic",
         "packageName": "eu.kanade.tachiyomi.extension.en.porncomic",
         "resources": {
-          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.porncomic/106001/extension.apk",
-          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.porncomic/106001/icon.png",
-          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.porncomic/106001/extension.jar"
+          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.porncomic/106002/extension.apk",
+          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.porncomic/106002/icon.png",
+          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.porncomic/106002/extension.jar"
         },
         "extensionLib": "1.6",
-        "versionCode": "106001",
-        "versionName": "1.6.1",
+        "versionCode": "106002",
+        "versionName": "1.6.2",
         "contentWarning": "CONTENT_WARNING_NSFW",
         "sources": [
           {

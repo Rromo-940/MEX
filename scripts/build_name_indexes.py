@@ -51,7 +51,7 @@ def main():
  for source in SOURCES:
   export=args.input_dir/f"{source}.records.json"
   if export.exists():
-   for row in json.loads(export.read_text()):emit(out,source,row[0],row[1],row[2] if len(row)>2 else "",row[3] if len(row)>3 else "")
+   for row in json.loads(export.read_text(encoding="utf-8-sig")):emit(out,source,row[0],row[1],row[2] if len(row)>2 else "",row[3] if len(row)>3 else "")
   buckets={i:[] for i in range(64)}
   for row in out[source].values():
    prefixes={w[i:i+3] for w in words(row[1]+" "+row[0]) if len(w)>=3 and w not in STOP for i in range(len(w)-2)}

@@ -1,8 +1,8 @@
 {
   "extension": "Porn Comic",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "tests": {
-    "tests": 5,
+    "tests": 8,
     "failures": 0,
     "errors": 0,
     "skipped": 0
@@ -35,5 +35,9 @@
     }
   },
   "androidDeviceTest": false,
-  "apkSha256": "989dc3dec7f8c2b11e726893cf48dcc0e35121797b5cf0c83303832b57248d05"
+  "apkSha256": "2e32bfcfbb807c1715764e4665fb81be6a78973c9c3374b6d2c2d19a6ad28351",
+  "indexCoverage": "partial: 165 records",
+  "exampleRecord": "842096: exact title and URL provided by user; live page/search fetch returned HTTP 403",
+  "searchBehavior": "combine native and indexed results, deduplicate across pages, keep index matches when native HTTP fails",
+  "indexCacheRevision": 2
 }

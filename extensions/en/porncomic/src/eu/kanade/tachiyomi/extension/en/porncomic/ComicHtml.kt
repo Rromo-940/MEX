@@ -7,7 +7,7 @@ internal object ComicHtml {
     fun cards(doc: Document) = doc.select("#list > li > a.thumb, #doujin_album > li > a.thumb").filter {
         isGallery(java.net.URI(it.absUrl("href")).path) && it.selectFirst("img") != null &&
             !it.parent()!!.select(".category").text().contains("video", true) &&
-            !Regex("(?i)\\b(video|mp4)\\b").containsMatchIn(it.selectFirst("img")!!.attr("alt"))
+            (!it.attr("href").startsWith("/cos/") || !Regex("(?i)\\b(video|mp4)\\b").containsMatchIn(it.selectFirst("img")!!.attr("alt")))
     }.distinctBy { it.absUrl("href") }
     fun next(doc: Document) = doc.select("#pages a, .page a").firstOrNull { it.text().trim().equals("Next", true) }?.absUrl("href")
     fun pageUrls(doc: Document): List<String> {

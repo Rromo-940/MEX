@@ -14,7 +14,7 @@ internal class NameIndex(private val client: OkHttpClient, private val key: Stri
         val bucket = GalleryIndex.shard(prefix)
         var rows = cached?.takeIf { it.first == bucket }?.second
         if (rows == null) {
-            val response = client.get("https://raw.githubusercontent.com/Rromo-940/MEX/main/public/search/$key/v1/$bucket.json", headers, Fetch.XHR, ensureSuccess = false)
+            val response = client.get("https://raw.githubusercontent.com/Rromo-940/MEX/main/public/search/$key/v1/$bucket.json?revision=2", headers, Fetch.XHR, ensureSuccess = false)
             if (response.code == 404) {
                 response.close()
                 return MangasPage(emptyList(), false)

@@ -160,3 +160,16 @@ Manga/picture galleries return the native image-page list from the visible pagin
 The name-index fallback contains 164 previously captured gallery/series entries and is explicitly partial. It supports partial-name matches and is registered in scripts/build_name_indexes.py for future exports. No complete sitemap/catalogue export was found. Native search remains primary. Language, tag, artist, parody, character and group filters use native links rather than invented combinations.
 
 Five unit tests, release build, lint and signing checks passed. Public HTML checks covered a 22-page manga, its different second full-size image, a 314-page picture gallery, a six-page Western chapter, and the phone reader layout. One later keyword-search check hit Cloudflare; its live result remains unverified. No Android-device test was performed.
+
+
+
+
+### Porn Comic v1.6.2 search correction
+
+Native and name-index results are now combined on each search page, with duplicates removed across both sources and subsequent pages. The index is no longer ignored whenever native search returns unrelated results. Index matches remain available when native search fails with an I/O/HTTP error. There is no unbounded title-result scan.
+
+Fixed an overbroad video-title exclusion: a manga gallery containing a word such as Video is retained; identified video cards and video-labelled cosplay entries remain excluded.
+
+The index now has 165 entries. Gallery /hentai/842096.html and its exact Mimiya title were supplied by the user because Cloudflare returned HTTP 403 for both that page and the native Mimiya search in this environment. The record is explicitly user-provided, not a newly fetched full catalogue. Complete title coverage is still unavailable and must not be inferred from this fix.
+
+Eight tests, release build, lint and signing verification passed. The new regression tests cover merging indexed matches with nonempty native results, deduplication across pages and retaining manga titles containing Video. No Android-device test was performed.
