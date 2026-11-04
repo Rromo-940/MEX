@@ -29,6 +29,27 @@
         ]
       },
       {
+        "name": "Hentai Yoga",
+        "packageName": "eu.kanade.tachiyomi.extension.en.hentaiyoga",
+        "resources": {
+          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiyoga/106001/extension.apk",
+          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiyoga/106001/icon.png",
+          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiyoga/106001/extension.jar"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106001",
+        "versionName": "1.6.1",
+        "contentWarning": "CONTENT_WARNING_NSFW",
+        "sources": [
+          {
+            "id": "4092775562380156548",
+            "name": "Hentai Yoga",
+            "language": "en",
+            "homeUrl": "https://hentai.yoga"
+          }
+        ]
+      },
+      {
         "name": "The Hentai",
         "packageName": "eu.kanade.tachiyomi.extension.en.thehentai",
         "resources": {

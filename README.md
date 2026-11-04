@@ -81,3 +81,14 @@ Categories: 3D Porn, Exclusive, Hentai, Images, Porn Comics. Tag filtering accep
 The reader follows the gallery's thumbnail links and extracts #img_gallery_big from each native image page, preserving site order and avoiding thumbnail substitution. No account is required. Ads and off-site cards are excluded. No video player is implemented.
 
 Four regression tests, release build, lint, and store signing verification passed. Public HTML checks confirmed a 25-page gallery, full-size reader markup, keyword results, and category pagination. No Android-device test was performed.
+
+
+## Hentai Yoga
+
+Hentai Yoga v1.6.1 supports image galleries, comics, manga and manhwa from hentai.yoga. No account required. Latest feed, most-viewed browsing, keyword search, paging, content type selection, Newest/Most viewed/Random sorts (Random unavailable for comics), lightweight text tag filtering, manga/manhwa genre slugs or same-site genre URLs, and nine language choices including All.
+
+Gallery tags use website keyword search, while comics support one exact tag. Genre and language apply to manga/manhwa; use the main search field for series keywords. Manga language defaults to English. Video-only categories and character directories are outside the image catalogue and are not exposed as image filters. Account interactions such as comments and favorites remain on the website.
+
+Gallery reading uses the native complete full-size noscript image set, preserving its order. Manga/manhwa use native chapter lists and chapter images, with update checks, chapter dates, descriptions, and available author/artist/status metadata. No video player is included. Native gallery pages were verified with 160 and 68 images, a manhwa chapter with 30 images, and manga with 15 chapters; keyword, exact comic tag, genre and language routes returned results.
+
+Six regression tests, release build, lint, and store signing verification passed. No Android-device test was performed.

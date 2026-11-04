@@ -1,0 +1,44 @@
+{
+  "extension": "Hentai Yoga",
+  "version": "1.6.1",
+  "tests": {
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "siteChecks": {
+    "detail": {
+      "galleryPages": 160,
+      "chapterPages": 0,
+      "cards": 16
+    },
+    "comicdetail": {
+      "galleryPages": 68,
+      "chapterPages": 0,
+      "cards": 16
+    },
+    "chapter": {
+      "galleryPages": 0,
+      "chapterPages": 30,
+      "cards": 6
+    },
+    "mangaonly": {
+      "galleryPages": 0,
+      "chapterPages": 0,
+      "cards": 30
+    },
+    "genre": {
+      "galleryPages": 0,
+      "chapterPages": 0,
+      "cards": 30
+    },
+    "search": {
+      "galleryPages": 0,
+      "chapterPages": 0,
+      "cards": 30
+    }
+  },
+  "androidDeviceTest": false,
+  "apkSha256": "1d37670c4aa80b857444189e4178e978c187d8d1a6b0f7cdbe30dc9c19161a3d"
+}
