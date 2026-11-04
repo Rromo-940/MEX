@@ -2,7 +2,7 @@
 
 Prepared for https://github.com/Rromo-940/MEX and Mihon v0.21.3.
 
-The store starts with the signed HentaiDad v1.6.2 gallery-only extension. It preserves the signing certificate, package name, and source ID used by the installed APK.
+The store includes signed HentaiDad v1.6.2 and Truyen Hentai v1.6.1 gallery-only extensions. It preserves the signing certificate, package name, and source ID used by the installed APK.
 
 ## Store URL
 
@@ -60,3 +60,7 @@ The initial package and index were validated locally. GitHub Actions deployment 
 ## Upstream
 
 Build engine: https://github.com/keiyoushi/extensions-source at c469cb1e161ef826373b5b87eb6174f872549108. Protobuf schema and generated bindings are from that repository. Upstream Apache-2.0 license is included in LICENSE.
+
+## Truyen Hentai
+
+English source for https://www.truyen-hentai.com. Supports gallery browsing, keyword search, page navigation, pasted gallery URLs, and a category/tag slug or URL field in Filter. Video posts are excluded. Each image post is represented by one Gallery chapter. Cloudflare may require opening the source in Mihon WebView before reading. Browser catalogue/search/pagination and reader image decoding were inspected; build tests and lint must pass before publication. See validation/truyenhentai.json for verification and limits.

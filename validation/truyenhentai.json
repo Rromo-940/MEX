@@ -1,0 +1,18 @@
+{
+  "extension": "Truyen Hentai",
+  "version": "1.6.1",
+  "tests": 6,
+  "failures": 0,
+  "signature": "verified against MEX certificate",
+  "browserChecks": [
+    "gallery feed has 36 gallery cards",
+    "gallery-only keyword search has 36 results",
+    "page two exposes next page 3",
+    "reader image decoded at 920x1636"
+  ],
+  "limitations": [
+    "Direct HTTP requests from the build environment were blocked by Cloudflare; browser inspection succeeded.",
+    "No Android device test was performed."
+  ],
+  "apkSha256": "498871447c1c7ddf8cd65b538aad9340ac3b953ca4602fab94bf33005856b098"
+}

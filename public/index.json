@@ -27,6 +27,27 @@
             "homeUrl": "https://hentaidad.com"
           }
         ]
+      },
+      {
+        "name": "Truyen Hentai",
+        "packageName": "eu.kanade.tachiyomi.extension.en.truyenhentai",
+        "resources": {
+          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.truyenhentai/106001/extension.apk",
+          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.truyenhentai/106001/icon.png",
+          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.truyenhentai/106001/extension.jar"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106001",
+        "versionName": "1.6.1",
+        "contentWarning": "CONTENT_WARNING_NSFW",
+        "sources": [
+          {
+            "id": "1422149209563258180",
+            "name": "Truyen Hentai",
+            "language": "en",
+            "homeUrl": "https://www.truyen-hentai.com"
+          }
+        ]
       }
     ]
   }
