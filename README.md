@@ -110,3 +110,12 @@ Six regression tests, release build, lint, and store signing verification passed
 Fixes empty results on Mihon: the site serves a different layout to Android browsers. Supports the phone entry_list catalogue, mobile next-page links, detail_list full-size gallery images, and shared Open Graph title/cover metadata. Desktop support remains. The primary list is selected separately from repeated sidebar lists.
 
 Eight regression tests and release lint passed. Captured Android-user-agent pages returned 10 entries each for Popular/Latest and 76 full-size gallery images. The original desktop-only verification missed this variant. No Android-device test was performed.
+
+
+## Title search update
+
+Main search now matches gallery titles across all five sources. All typed words must appear in the title, ignoring case, punctuation, and accents. Tag/category text does not satisfy a title search. Main text takes precedence over tag/category filters; Yoga retains content type and language. Empty filtered result pages are skipped while native pagination continues, so sparse matches remain accessible. Broad searches may take longer because site keyword searches include metadata.
+
+Hentai IMG additionally verifies a gallery URL derived from pasted full titles, recovering exact galleries omitted by native keyword search. Its empty-result pages no longer return sidebar recommendations. This address lookup depends on the site's slug matching the title; title searches still depend on the site's index for other candidates. It does not build or guarantee a complete local index of each website.
+
+Versions: HentaiDad 1.6.3, Truyen Hentai 1.6.5, The Hentai 1.6.2, Hentai Yoga 1.6.2, Hentai IMG 1.6.3. Build, unit tests, lint, and signing checks passed for all five. Four native searches were checked using public HTML; Truyen live search returned HTTP 403. No Android-device test was performed.

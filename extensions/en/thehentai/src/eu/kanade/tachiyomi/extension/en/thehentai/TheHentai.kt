@@ -25,7 +25,13 @@ abstract class TheHentai : KeiSource() {
     override fun OkHttpClient.Builder.configureClient() = rateLimit(2)
     override suspend fun getPopularManga(page: Int) = listing(TheHentaiHtml.listUrl(baseUrl, "/", page, ""))
     override suspend fun getLatestUpdates(page: Int) = getPopularManga(page)
+    private val titleSearch = TitleSearch()
     override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage {
+        if (query.isBlank()) return rawSearch(page, query, filters)
+        val titleFilters = FilterList()
+        return titleSearch.find(page, query, query) { remotePage -> rawSearch(remotePage, query, titleFilters) }
+    }
+    private suspend fun rawSearch(page: Int, query: String, filters: FilterList): MangasPage {
         val category = filters.firstInstanceOrNull<CategoryFilter>()?.path.orEmpty()
         val tag = filters.firstInstanceOrNull<TagFilter>()?.state.orEmpty().trim()
         require(tag.isEmpty() || category.isEmpty()) { "Choose All categories when filtering by a tag." }

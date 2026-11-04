@@ -6,8 +6,8 @@ import org.jsoup.nodes.Document
 internal object ImgHtml {
     fun listUrl(base: String, path: String, page: Int) = base + path.trimEnd('/') + if (page == 1) "/" else "/page/$page/"
     fun cards(doc: Document) = (
-        doc.selectFirst("#image-list")?.select(".image-list-item")
-            ?: doc.selectFirst("#entry_list")?.select("li")
+        doc.selectFirst("#display_area_image")?.selectFirst("#image-list")?.select(".image-list-item")
+            ?: doc.selectFirst("#right_sidebar")?.selectFirst("#entry_list")?.select("li")
         ).orEmpty().filter { link(it) != null }
     fun link(card: org.jsoup.nodes.Element) = card.selectFirst(".image-list-item-title a[href^=/image/], a[href^=/image/]")
     fun hasNext(doc: Document) = doc.selectFirst("a.nextpostslink[href], #page_nation a[rel=next][href]") != null
@@ -16,6 +16,7 @@ internal object ImgHtml {
     fun tags(doc: Document) = doc.select("a[href^=/search/tag/]").associate {
         it.text().replace(Regex("\\s*\\(\\d+\\)\\s*$"), "").trim().lowercase() to it.attr("href")
     }
+    fun titleSlug(query: String) = java.text.Normalizer.normalize(query, java.text.Normalizer.Form.NFKD).lowercase(java.util.Locale.ROOT).replace(Regex("[^a-z0-9]+"), "-").trim('-')
     fun tagPath(base: String, input: String): String {
         val raw = input.trim()
         if (raw.startsWith("https://") || raw.startsWith("/search/tag/")) {

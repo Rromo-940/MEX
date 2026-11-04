@@ -28,7 +28,26 @@ abstract class HentaiImg : KeiSource() {
     override suspend fun getPopularManga(page: Int) = listing(ImgHtml.listUrl(baseUrl, "/ranking/", page))
     override suspend fun getLatestUpdates(page: Int) = listing(ImgHtml.listUrl(baseUrl, "/search/", page))
     private var tagNames: Map<String, String>? = null
+    private val titleSearch = TitleSearch()
     override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage {
+        if (query.isBlank()) return rawSearch(page, query, filters)
+        val titleFilters = FilterList()
+        val result = titleSearch.find(page, query, query) { remotePage -> rawSearch(remotePage, query, titleFilters) }
+        if (page != 1 || query.none { it.isWhitespace() }) return result
+        val slug = ImgHtml.titleSlug(query)
+        if (slug.isEmpty()) return result
+        val response = client.get("$baseUrl/image/$slug/", Fetch.DOCUMENT, ensureSuccess = false)
+        if (!response.isSuccessful) {
+            response.close()
+            return result
+        }
+        val doc = response.asJsoup()
+        if (doc.selectFirst("meta[property=og:type][content=article]") == null || ImgHtml.images(doc).isEmpty()) return result
+        val direct = details(doc)
+        if (!TitleSearch.matches(direct.title, query) || result.mangas.any { it.url == direct.url }) return result
+        return MangasPage(listOf(direct) + result.mangas, result.hasNextPage)
+    }
+    private suspend fun rawSearch(page: Int, query: String, filters: FilterList): MangasPage {
         val tag = filters.firstInstanceOrNull<TagFilter>()?.state.orEmpty().trim()
         require(query.isBlank() || tag.isEmpty()) { "Use either keyword search or one exact tag." }
         val path = when {
@@ -46,7 +65,13 @@ abstract class HentaiImg : KeiSource() {
     }
     private fun String.toHttpUrlSegment() = "$baseUrl/".toHttpUrl().newBuilder().addPathSegment(this).build().encodedPath.removePrefix("/")
     private suspend fun listing(url: String): MangasPage {
-        val doc = client.get(url, Fetch.DOCUMENT).asJsoup()
+        val response = client.get(url, Fetch.DOCUMENT, ensureSuccess = false)
+        if (response.code == 404) {
+            response.close()
+            return MangasPage(emptyList(), false)
+        }
+        check(response.isSuccessful) { "Website returned HTTP ${response.code}" }
+        val doc = response.asJsoup()
         val mangas = ImgHtml.cards(doc).map { card ->
             SManga.create().apply {
                 val link = ImgHtml.link(card)!!
@@ -99,7 +124,7 @@ abstract class HentaiImg : KeiSource() {
     }
     override fun getFilterList(data: JsonElement?) = FilterList(
         FeedFilter(),
-        Filter.Header("Feed applies when search and tag are empty. Keyword search and exact tag are separate."),
+        Filter.Header("Main search matches titles and takes priority. Tag and Browse apply with search empty."),
         TagFilter(),
         Filter.Header("Tag: site display name, exact slug, or /search/tag/ URL. No large tag dropdown."),
     )

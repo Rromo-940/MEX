@@ -44,7 +44,13 @@ abstract class TruyenHentai : KeiSource() {
 
     override suspend fun getLatestUpdates(page: Int) = getPopularManga(page)
 
+    private val titleSearch = TitleSearch()
     override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage {
+        if (query.isBlank()) return rawSearch(page, query, filters)
+        val titleFilters = FilterList()
+        return titleSearch.find(page, query, query) { remotePage -> rawSearch(remotePage, query, titleFilters) }
+    }
+    private suspend fun rawSearch(page: Int, query: String, filters: FilterList): MangasPage {
         val category = filters.firstInstanceOrNull<CategoryFilter>()?.path
         val tagSearch = filters.firstInstanceOrNull<TagSearchFilter>()?.state.orEmpty().trim()
         require(category == null || tagSearch.isEmpty()) { "Set Categories to All when using Tag search." }
@@ -150,7 +156,7 @@ abstract class TruyenHentai : KeiSource() {
         val directories = data?.parseAs<Directories>()
         return FilterList(
             buildList {
-                add(Filter.Header("Tag search uses the website search. Set Categories to All when searching tags."))
+                add(Filter.Header("Main search matches titles and takes priority. With search empty, use Categories or Tag search."))
                 if (directories != null) {
                     add(CategoryFilter(directories.categories))
                 }

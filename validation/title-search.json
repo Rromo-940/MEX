@@ -1,0 +1,66 @@
+{
+  "extensions": {
+    "hentaidad": {
+      "version": "1.6.3",
+      "tests": {
+        "tests": 15,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 2
+      },
+      "apkSha256": "cd06d25c04ad62e0b20240a1a9caf23c451c9680ef6aaac98cc24f51944902b5"
+    },
+    "truyenhentai": {
+      "version": "1.6.5",
+      "tests": {
+        "tests": 20,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apkSha256": "b04b0554fc7f4c15b0cedbf8d75774e03d9f700443272c6cbdcd2654c26461f9"
+    },
+    "thehentai": {
+      "version": "1.6.2",
+      "tests": {
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apkSha256": "0bc958333398175a4fc8b31d3524a2ca8fe46f70fd37ec29252d30aee1094ff9"
+    },
+    "hentaiyoga": {
+      "version": "1.6.2",
+      "tests": {
+        "tests": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apkSha256": "088bd761ea40aa56e355b8786b6216575f67daf7f215767514d2c4abec71e411"
+    },
+    "hentaiimg": {
+      "version": "1.6.3",
+      "tests": {
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apkSha256": "6b889b0e1d23d6ad27bae48a5bb73818a4a9ad4379b7a8d7b03bd801fd1b3ca9"
+    }
+  },
+  "behavior": "Main search matches all typed words against gallery titles, ignoring case, accents and punctuation; skips remote result pages without title matches. Main search takes precedence over tag/category filters; Yoga preserves content type and language.",
+  "hentaiImgFix": "Verified pasted full title maps to actual canonical gallery URL, 94 image links. Native keyword search returned zero. Empty primary results no longer fall through to sidebar.",
+  "liveSearchChecks": [
+    "HentaiDad",
+    "The Hentai",
+    "Hentai Yoga",
+    "Hentai IMG"
+  ],
+  "liveSearchBlocked": [
+    "Truyen Hentai: HTTP 403"
+  ],
+  "androidDeviceTest": false
+}
