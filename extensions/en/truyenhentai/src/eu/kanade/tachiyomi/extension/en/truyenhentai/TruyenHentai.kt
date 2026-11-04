@@ -13,18 +13,19 @@ import keiyoushi.network.Fetch
 import keiyoushi.network.get
 import keiyoushi.network.rateLimit
 import keiyoushi.source.KeiSource
+import keiyoushi.utils.applicationContext
 import keiyoushi.utils.asJsoup
 import keiyoushi.utils.firstInstanceOrNull
 import keiyoushi.utils.parseAs
 import keiyoushi.utils.toJsonElement
 import keiyoushi.utils.tryParseZonedDateTime
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
 import okhttp3.Headers
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import org.jsoup.nodes.Document
-import org.jsoup.parser.Parser
 import java.time.format.DateTimeFormatter
 
 @Source
@@ -45,10 +46,9 @@ abstract class TruyenHentai : KeiSource() {
 
     override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage {
         val category = filters.firstInstanceOrNull<CategoryFilter>()?.path
-        val tag = filters.firstInstanceOrNull<TagFilter>()?.path
-        require(category == null || tag == null) { "Choose a category or a tag; set the other selector to All." }
-        val selected = tag ?: category
-        val url = if (selected == null) GalleryHtml.listUrl(baseUrl, 1, query) else DirectoryHtml.listUrl(baseUrl, selected)
+        val tagSearch = filters.firstInstanceOrNull<TagSearchFilter>()?.state.orEmpty().trim()
+        require(category == null || tagSearch.isEmpty()) { "Set Categories to All when using Tag search." }
+        val url = if (category == null) DirectoryHtml.searchUrl(baseUrl, query, tagSearch) else DirectoryHtml.listUrl(baseUrl, category)
         return listing(url, page)
     }
 
@@ -124,28 +124,22 @@ abstract class TruyenHentai : KeiSource() {
         val categories = client.get("$baseUrl/en/get_categories/public", Fetch.XHR)
             .parseAs<List<CategoryDto>>().map { it.entry() }.let(DirectoryHtml::sorted)
         check(categories.isNotEmpty()) { "The category directory is empty." }
-        val index = client.get("$baseUrl/sitemaps/sitemap-tags-truyenhentai-index.xml", Fetch.DOCUMENT).asJsoup(Parser.xmlParser())
-        val sitemapUrls = DirectoryHtml.sitemaps(index, baseUrl)
-        check(sitemapUrls.isNotEmpty()) { "The tag sitemap index is empty." }
-        val tags = buildList {
-            for (url in sitemapUrls) {
-                val document = client.get(url, Fetch.DOCUMENT).asJsoup(Parser.xmlParser())
-                addAll(DirectoryHtml.tags(document, baseUrl))
-            }
-        }.let(DirectoryHtml::sorted)
-        check(tags.isNotEmpty()) { "The tag directory is empty." }
-        return Directories(categories, tags).toJsonElement()
+        return Directories(categories).toJsonElement()
     }
 
     override fun getFilterList(data: JsonElement?): FilterList {
+        // Discard the old full-tag cache once; the next refresh fetches only categories.
+        if (data is JsonObject && "tags" in data) {
+            applicationContext.cacheDir.resolve("source_$id/filters.json.zst").delete()
+        }
         val directories = data?.parseAs<Directories>()
         return FilterList(
             buildList {
-                add(Filter.Header("Choose a category OR a tag. A selection overrides search text."))
+                add(Filter.Header("Tag search uses the website search. Set Categories to All when searching tags."))
                 if (directories != null) {
                     add(CategoryFilter(directories.categories))
-                    add(TagFilter(directories.tags))
                 }
+                add(TagSearchFilter())
             },
         )
     }

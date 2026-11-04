@@ -1,19 +1,16 @@
 {
   "extension": "Truyen Hentai",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "tests": {
     "tests": 11,
     "failures": 0,
     "errors": 0,
     "skipped": 0
   },
-  "categories": 129,
-  "publishedTagEntries": 24238,
-  "tagSitemapPages": 5,
-  "directoryBehavior": "Fetch every tag sitemap; deduplicate by native URL; sort both directories alphabetically; keep category and tag selectors separate.",
-  "selection": "One category OR one tag. Set the other selector to All.",
-  "signature": "verified against the existing MEX signing identity",
+  "tagInput": "Plain text search routed to website gallery search; no tag dropdown, autocomplete, or tag catalogue download.",
+  "categories": "Alphabetized selectable category directory retained.",
+  "cacheMigration": "Legacy full-tag cache is discarded when encountered; replacement cache contains categories only.",
+  "signature": "verified against existing MEX signing identity",
   "androidDeviceTest": false,
-  "browserDirectoryVerification": true,
-  "apkSha256": "eca294726a13638d24fb0b61d8c9f730ae24ea1ddea15189cadcf2dfb8d29fcc"
+  "apkSha256": "e44bc42646a827c1be5dfd80203878e3352eaca174af6fcb4869eabfffa69908"
 }
