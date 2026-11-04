@@ -1,6 +1,6 @@
 
-MEXMEX@2fd56c7ae1229f576de301edeb75d09e04836da6566f11a5adf950d156d1ada1">
-<https://raw.githubusercontent.com/Rromo-940/MEX/main/public/ªÀ
+MEXMEX@2fd56c7ae1229f576de301edeb75d09e04836da6566f11a5adf950d156d1ada1""
+ https://github.com/Rromo-940/MEXªÀ
 
 ²
 	HentaiDad*eu.kanade.tachiyomi.extension.en.hentaidad´

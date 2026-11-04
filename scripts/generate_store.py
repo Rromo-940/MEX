@@ -16,7 +16,7 @@ def generate(root, base_url, apksigner):
     base_url = base_url.rstrip("/")
     config = json.loads((root / "store.json").read_text())
     index = index_pb2.Index(name=config["name"], badgeLabel=config["badgeLabel"], signingKey=config["signingKey"])
-    index.contact.website = base_url + "/"
+    index.contact.website = config.get("website", base_url + "/")
     public = root / "public"
     public.mkdir(exist_ok=True)
     seen_packages, seen_sources = set(), set()
@@ -55,7 +55,7 @@ def generate(root, base_url, apksigner):
     assert decoded == index
     (public / "index.pb").write_bytes(data)
     (public / "index.json").write_text(MessageToJson(index), encoding="utf-8")
-    (public / "repo.json").write_text(json.dumps({"index_v2": base_url + "/index.pb", "meta": {"name": config["name"], "website": base_url + "/", "signingKeyFingerprint": config["signingKey"]}}, indent=2))
+    (public / "repo.json").write_text(json.dumps({"index_v2": base_url + "/index.pb", "meta": {"name": config["name"], "website": index.contact.website, "signingKeyFingerprint": config["signingKey"]}}, indent=2))
     print(f"Validated {len(seen_packages)} signed extensions; store URL: {base_url}/index.pb")
 
 
