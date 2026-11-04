@@ -32,13 +32,13 @@
         "name": "Hentai IMG",
         "packageName": "eu.kanade.tachiyomi.extension.en.hentaiimg",
         "resources": {
-          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106004/extension.apk",
-          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106004/icon.png",
-          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106004/extension.jar"
+          "apkUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106005/extension.apk",
+          "iconUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106005/icon.png",
+          "jarUrl": "https://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106005/extension.jar"
         },
         "extensionLib": "1.6",
-        "versionCode": "106004",
-        "versionName": "1.6.4",
+        "versionCode": "106005",
+        "versionName": "1.6.5",
         "contentWarning": "CONTENT_WARNING_NSFW",
         "sources": [
           {

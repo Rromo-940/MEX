@@ -14,11 +14,13 @@ import keiyoushi.network.rateLimit
 import keiyoushi.source.KeiSource
 import keiyoushi.utils.asJsoup
 import keiyoushi.utils.firstInstanceOrNull
+import keiyoushi.utils.parseAs
 import kotlinx.serialization.json.JsonElement
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import org.jsoup.nodes.Document
+import java.util.zip.GZIPInputStream
 
 @Source
 abstract class HentaiImg : KeiSource() {
@@ -28,11 +30,21 @@ abstract class HentaiImg : KeiSource() {
     override suspend fun getPopularManga(page: Int) = listing(ImgHtml.listUrl(baseUrl, "/ranking/", page))
     override suspend fun getLatestUpdates(page: Int) = listing(ImgHtml.listUrl(baseUrl, "/search/", page))
     private var tagNames: Map<String, String>? = null
+    private val indexQueries = object : LinkedHashMap<String, Boolean>(32, 0.75f, true) {
+        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, Boolean>) = size > 32
+    }
+    private var cachedShard: Pair<String, List<List<String>>>? = null
     override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage {
         if (query.isBlank()) return rawSearch(page, query, filters)
-        val titleFilters = FilterList()
-        val result = rawSearch(page, query, titleFilters)
-        if (page != 1 || result.mangas.isNotEmpty() || query.trim().length < 40 || query.none { it.isWhitespace() }) return result
+        if (page > 1 && synchronized(indexQueries) { indexQueries[query] == true }) return indexSearch(page, query)
+        val result = rawSearch(page, query, FilterList())
+        if (page != 1 || result.mangas.isNotEmpty()) return result
+        val indexed = indexSearch(page, query)
+        if (indexed.mangas.isNotEmpty()) {
+            synchronized(indexQueries) { indexQueries[query] = true }
+            return indexed
+        }
+        if (query.trim().length < 40 || query.none { it.isWhitespace() }) return result
         val slug = ImgHtml.titleSlug(query)
         if (slug.isEmpty()) return result
         val response = client.get("$baseUrl/image/$slug/", Fetch.DOCUMENT, ensureSuccess = false)
@@ -43,8 +55,33 @@ abstract class HentaiImg : KeiSource() {
         val doc = response.asJsoup()
         if (doc.selectFirst("meta[property=og:type][content=article]") == null || ImgHtml.images(doc).isEmpty()) return result
         val direct = details(doc)
-        if (!TitleSearch.matches(direct.title, query) || result.mangas.any { it.url == direct.url }) return result
-        return MangasPage(listOf(direct) + result.mangas, result.hasNextPage)
+        if (!TitleSearch.matches(direct.title, query)) return result
+        return MangasPage(listOf(direct), false)
+    }
+    private suspend fun indexSearch(page: Int, query: String): MangasPage {
+        val prefix = GalleryIndex.prefix(query) ?: return MangasPage(emptyList(), false)
+        val bucket = GalleryIndex.shard(prefix)
+        var shard = cachedShard?.takeIf { it.first == bucket }?.second
+        if (shard == null) {
+            val response = client.get("https://raw.githubusercontent.com/Rromo-940/MEX/main/public/search/hentaiimg/v1/$bucket.json.gz", Fetch.XHR, ensureSuccess = false)
+            if (response.code == 404) {
+                response.close()
+                return MangasPage(emptyList(), false)
+            }
+            check(response.isSuccessful) { "Gallery-name index returned HTTP ${response.code}" }
+            shard = GZIPInputStream(response.body.byteStream()).parseAs<List<List<String>>>()
+            cachedShard = bucket to shard
+        }
+        val matches = shard.filter { GalleryIndex.matches(it[0], query) }
+        val start = (page - 1) * 20
+        val mangas = matches.drop(start).take(20).map { row ->
+            SManga.create().apply {
+                url = "/image/${row[0]}/"
+                title = java.net.URLDecoder.decode(row[0], "UTF-8").replace('-', ' ')
+                thumbnail_url = row.getOrNull(1)?.takeIf { it.isNotEmpty() }?.let(GalleryIndex::thumbnail)
+            }
+        }
+        return MangasPage(mangas, start + 20 < matches.size)
     }
     private suspend fun rawSearch(page: Int, query: String, filters: FilterList): MangasPage {
         val tag = filters.firstInstanceOrNull<TagFilter>()?.state.orEmpty().trim()

@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "builtAt": "2026-11-04T04:14:29.875878+00:00",
+  "galleries": 162771,
+  "sitemaps": 721,
+  "shards": 64,
+  "bytes": 20451523,
+  "maxShardBytes": 656661,
+  "mimiyaGalleries": 12,
+  "titleSource": "Public gallery URL slugs; display titles are approximations",
+  "format": "sha256(prefix3)[0] & 63; complete matching slug records, 20 results per page",
+  "mimiyaExactWordGalleries": 7
+}

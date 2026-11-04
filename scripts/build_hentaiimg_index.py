@@ -2,6 +2,7 @@
 import concurrent.futures
 import gzip
 import io
+import hashlib
 import json
 import re
 import time
@@ -22,8 +23,10 @@ def words(value):
     value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode().lower()
     return re.findall("[a-z0-9]+", value)
 
+STOP = set("girl girls images image erotic hentai generated sex porn part collection the and with from for full set patreon fanbox pixiv artist".split())
+
 def prefixes(slug):
-    return {word[:3] for word in words(urllib.parse.unquote(slug)) if len(word) >= 3}
+    return {word[:3] for word in words(urllib.parse.unquote(slug)) if len(word) >= 3 and word not in STOP}
 
 def fetch(url):
     for attempt in range(3):
@@ -60,8 +63,8 @@ def main():
                 if record[0] in seen:
                     continue
                 seen.add(record[0])
-                for prefix in prefixes(record[0]):
-                    buckets[prefix].append(record)
+                for bucket in {hashlib.sha256(prefix.encode()).digest()[0] % 64 for prefix in prefixes(record[0])}:
+                    buckets[f"{bucket:02x}"].append(record)
             if count % 20 == 0 or count == len(urls):
                 print(f"Sitemaps {count}/{len(urls)}; galleries {len(seen)}", flush=True)
     if len(seen) < 10000 or not any("mimiya" in slug for slug in seen):

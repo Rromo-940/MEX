@@ -121,3 +121,16 @@ Main search now returns the website's normal results, including title, tag and d
 Hentai IMG's verified full-title gallery-address lookup is retained only for an empty first result page and a multiword query at least 40 characters long. Short queries such as cow girl and mimiya do not trigger it. Existing primary-result parsing and mobile-reader fixes remain.
 
 Versions: HentaiDad 1.6.4, Truyen Hentai 1.6.6, The Hentai 1.6.3, Hentai Yoga 1.6.3, Hentai IMG 1.6.4. Main search still takes priority over tag/category filters; Yoga retains content type and language. Gallery/video exclusion remains. Build, tests, lint and signing checks passed. Two optional HentaiDad capture tests were skipped because their external fixture paths were not supplied. No Android-device benchmark was performed.
+
+
+## Hentai IMG gallery-name index (v1.6.5)
+
+When the website's native search finds nothing, Hentai IMG now searches a compact gallery-name index hosted in MEX. Normal website results remain the first choice. The index contains 162,771 distinct public gallery URLs from 721 public image sitemaps, captured 2026-11-04. It finds seven exact Mimiya galleries, including the reported Cow Girl gallery, despite native search returning no results.
+
+A fallback query downloads one compressed shard (at most 657 KB in this snapshot), filters it locally, and returns 20 galleries per page. The current shard is retained for pagination. There is no crawling of gallery pages or multiple search pages on the phone. Short queries require a meaningful word of at least three characters.
+
+The index uses gallery URL slugs as approximate names and the first sitemap image as the cover. Opening a gallery fetches its exact title and native reader details. It is a snapshot, not a live or complete title database: new posts, titles missing words from their URLs, and non-Latin searches can be absent. Exact words are matched to avoid returning another creator named Mimiyama for Mimiya.
+
+Refresh manually from a network where the site's public sitemaps are accessible: run python scripts/build_hentaiimg_index.py, then commit public/search/hentaiimg. The attempted cloud build was denied HTTP 403, so its failing scheduled workflow was removed. No automated refresh is enabled.
+
+The generated index, reported regression gallery, compression format, release build, 18 unit tests, lint, and store signing were checked. No Android-device test was performed.
