@@ -7,7 +7,7 @@ fhttps://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaid
 µ
 
 Hentai IMG*eu.kanade.tachiyomi.extension.en.hentaiimg´
-fhttps://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106001/extension.apkahttps://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106001/icon.pngªfhttps://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106001/extension.jar"1.6(‘¼21.6.18B2ê¹èµ¶˜¹„G
+fhttps://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106002/extension.apkahttps://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106002/icon.pngªfhttps://raw.githubusercontent.com/Rromo-940/MEX/main/public/packages/en.hentaiimg/106002/extension.jar"1.6(’¼21.6.28B2ê¹èµ¶˜¹„G
 Hentai IMGen"https://hentai-img.com
 ¸
 Hentai Yoga+eu.kanade.tachiyomi.extension.en.hentaiyoga·

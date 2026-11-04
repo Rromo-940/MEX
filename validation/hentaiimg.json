@@ -1,8 +1,8 @@
 {
   "extension": "Hentai IMG",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "tests": {
-    "tests": 6,
+    "tests": 8,
     "failures": 0,
     "errors": 0,
     "skipped": 0
@@ -70,5 +70,5 @@
     }
   },
   "androidDeviceTest": false,
-  "apkSha256": "42fc0f5c2b1f9412680a4c38f6fcd0e58ab608073170c470caae9556f63aa2ee"
+  "apkSha256": "939d24baa384f9eee1c7dffe9ee43c8d6311a38682e6e7024eebd6595961e84d"
 }

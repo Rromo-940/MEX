@@ -49,19 +49,19 @@ abstract class HentaiImg : KeiSource() {
         val doc = client.get(url, Fetch.DOCUMENT).asJsoup()
         val mangas = ImgHtml.cards(doc).map { card ->
             SManga.create().apply {
-                val link = card.selectFirst(".image-list-item-title a")!!
+                val link = ImgHtml.link(card)!!
                 setUrlWithoutDomain(link.absUrl("href"))
-                title = link.text()
+                title = card.selectFirst("img")?.attr("alt")?.takeIf { it.isNotBlank() } ?: link.text()
                 val image = card.selectFirst("img")
                 thumbnail_url = image?.absUrl("data-original")?.takeIf { it.isNotEmpty() } ?: image?.absUrl("src")
             }
         }
-        return MangasPage(mangas, doc.selectFirst("a.nextpostslink[href]") != null)
+        return MangasPage(mangas, ImgHtml.hasNext(doc))
     }
     private fun details(doc: Document) = SManga.create().apply {
         setUrlWithoutDomain(doc.location())
-        title = doc.selectFirst("#title h2")!!.text()
-        thumbnail_url = doc.selectFirst("#display_image_detail img")?.absUrl("src")
+        title = doc.selectFirst("meta[property=og:title]")!!.attr("content").removeSuffix(" - Hentai Image")
+        thumbnail_url = doc.selectFirst("meta[property=og:image]")?.absUrl("content")
         genre = doc.select("#detail_tag a").map { it.text() }.distinct().joinToString()
         status = SManga.UNKNOWN
     }

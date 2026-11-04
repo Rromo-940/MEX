@@ -96,10 +96,17 @@ Six regression tests, release build, lint, and store signing verification passed
 
 ## Hentai IMG
 
-Hentai IMG v1.6.1 adds hentai-img.com: complete full-size image galleries, keyword search, exact tags, Latest, Popular posts, Download/Bookmark/Like rankings, Recently viewed, Recent downloads/bookmarks/likes, catalogue pagination, and gallery update checks. No account is required for these public features.
+Hentai IMG v1.6.2 adds hentai-img.com: complete full-size image galleries, keyword search, exact tags, Latest, Popular posts, Download/Bookmark/Like rankings, Recently viewed, Recent downloads/bookmarks/likes, catalogue pagination, and gallery update checks. No account is required for these public features.
 
 Tags use a text field. Display names are resolved using the site's tag directory; exact slugs and same-site /search/tag/ URLs are also accepted. Keyword search and exact tag are separate; browse feeds apply when both fields are empty. The site does not expose a separate category taxonomy for galleries.
 
 The reader extracts full-size links marked data-modal-gallery-image-item, never the p=700 display previews or p=160x200 thumbnails. Native Next links are followed when a gallery spans pages, with duplicate images removed and loops detected. Previous/Next Post links are excluded. Single-image ranking/archive walls, videos, and account actions such as posting comments/bookmarks remain website features.
 
 Six regression tests, release build, lint, and store signing verification passed. Public HTML checks verified all nine browse feeds, keyword and tag pagination, and 76-image and 40-image galleries. No Android-device test was performed.
+
+
+### Hentai IMG v1.6.2 phone layout fix
+
+Fixes empty results on Mihon: the site serves a different layout to Android browsers. Supports the phone entry_list catalogue, mobile next-page links, detail_list full-size gallery images, and shared Open Graph title/cover metadata. Desktop support remains. The primary list is selected separately from repeated sidebar lists.
+
+Eight regression tests and release lint passed. Captured Android-user-agent pages returned 10 entries each for Popular/Latest and 76 full-size gallery images. The original desktop-only verification missed this variant. No Android-device test was performed.
